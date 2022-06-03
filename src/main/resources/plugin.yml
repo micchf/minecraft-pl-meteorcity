@@ -1,0 +1,12 @@
+name: MeteorCity
+version: '${project.version}'
+main: ita.micc.meteorcity.MeteorCity
+api-version: 1.17
+depend: [ WorldEdit ]
+authors: [ Codeh ]
+description: Plugin for create City
+commands:
+  city:
+    description: city command for city utility.
+  cityadmin:
+    description: city command for admin.

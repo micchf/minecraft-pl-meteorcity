@@ -1,0 +1,70 @@
+database:
+  hostname: localhost
+  port: 3306
+  username: newuser
+  password: password
+  database: meteorcity
+
+messages:
+  only-player: "&c&l(!)&c Solo i player possono."
+  no-perm: "&c&l(!)&c Non hai accesso a questo comando."
+  bad-syntax: "&c&l(!)&c Sintassi errata"
+  not-online: "&c&l(!)&c Quel player non è online."
+
+  city-player-has-already-a-city: "&c&l(!)&c Hai già una città."
+  city-player-has-already-a-city-in-build: "&c&l(!)&c Stai già creando una città."
+  city-player-hasnt-a-city: "&c&l(!)&c Non hai una città."
+  city-player-has-a-city-in-load-from-database: "&c&l(!)&c Hai già una città che si sta caricando dal database, attendi."
+  city-player-not-owner: "&c&l(!)&c Non sei il capo della città."
+  city-player-city-in-disband: "&c&l(!)&c Disband in corso della tua città.."
+  city-player-not-role: "&c&l(!)&c Non hai il ruolo per fare questo."
+
+  city-error-during-disband: "&c&l(!)&c Errore durante il disband."
+  city-disband-success: "&a&l(!)&a Disband completato."
+  city-in-disband: "&c&l(!)&c La città è attualmente in disband."
+
+  city-admin-refreshtemplates: "&a&l(!)&a Templates riavviati."
+
+  target-you-are: "&c&l(!)&c Non puoi fare questo comando a te stesso."
+  target-has-a-city: "&c&l(!)&C Quel player ha già una città"
+  target-send-invite: "&a&l(!)&a Invito inviato con successo."
+  target-message-to-target: "&a&l(!)&a Hai ricevuto un nuovo invito, fai /city acceptinvite per accettarlo."
+
+  invite-you-havent: "&c&l(!)&c Non hai inviti in sospeso."
+  invite-expired: "&c&l(!)&c Invito scaduto."
+  invite-success-join: "&a&l(!)&a Sei entrato in città."
+
+  city-start-creation: "&a&l(!)&a Creazione città in corso."
+  city-success-creation: "&a&l(!)&a Città creata con successo, fai /city go per andare nella tua città."
+  city-error-creation: "&c&l(!)&C Errore durante la creazione della città."
+
+  template-dont-exist: "&c&l(!)&c Quel template non esiste."
+  template-no-perm: "&c&l(!)&c Non hai accesso a questo template."
+
+templates:
+  NEW_YORK:
+    name: NEW_YORK
+    schematicFileName: NEW_YORK.schem
+    permissionRequired: test
+    main:
+      X: 169
+      Y: 87
+      Z: 195
+    playerSpawn:
+      X: 76
+      Y: 13
+      Z: 109
+    wildZone:
+      minX: 1
+      minY: 2
+      minZ: 10
+      maxX: 5
+      maxY: 10
+      maxZ: 100
+    townHall:
+      minX: 10
+      minY: 10
+      minZ: 10
+      maxX: 10
+      maxY: 10
+      maxZ: 10
