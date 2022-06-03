@@ -18,6 +18,8 @@ messages:
   city-player-not-owner: "&c&l(!)&c Non sei il capo della città."
   city-player-city-in-disband: "&c&l(!)&c Disband in corso della tua città.."
   city-player-not-role: "&c&l(!)&c Non hai il ruolo per fare questo."
+  city-player-not-in-the-city: "&c&l(!&c Devi essere in città per farlo."
+  city-player-spawn-update: "&a&l(!)&a Spawn aggiornato."
 
   city-error-during-disband: "&c&l(!)&c Errore durante il disband."
   city-disband-success: "&a&l(!)&a Disband completato."
@@ -25,10 +27,13 @@ messages:
 
   city-admin-refreshtemplates: "&a&l(!)&a Templates riavviati."
 
+  target-is-not-member-city: "&c&l(!)&c Quel player non è un membro della tua isola."
+  target-not-online: "&c&l(!)&c Quel player non è online."
   target-you-are: "&c&l(!)&c Non puoi fare questo comando a te stesso."
   target-has-a-city: "&c&l(!)&C Quel player ha già una città"
   target-send-invite: "&a&l(!)&a Invito inviato con successo."
   target-message-to-target: "&a&l(!)&a Hai ricevuto un nuovo invito, fai /city acceptinvite per accettarlo."
+  target-role-update: "&a&l(!)&a Il tuo ruolo all'interno della città è stato aggiornato."
 
   invite-you-havent: "&c&l(!)&c Non hai inviti in sospeso."
   invite-expired: "&c&l(!)&c Invito scaduto."

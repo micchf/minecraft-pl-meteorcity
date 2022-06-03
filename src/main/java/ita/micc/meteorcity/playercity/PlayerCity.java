@@ -262,4 +262,19 @@ public class PlayerCity {
     public MemberRole getMemberByUUID(String UUID) {
         return membersMap.get(UUID);
     }
+
+    /**
+     * Update member's role
+     * @param UUID of player
+     * @param memberRole new role
+     */
+    public void updateMemberRole(String UUID, MemberRole memberRole) {
+        for (Member member : members) {
+            if (member.getUUID().equals(UUID)) {
+                member.setRole(memberRole.value());
+            }
+        }
+        membersMap.remove(UUID);
+        membersMap.put(UUID, memberRole);
+    }
 }

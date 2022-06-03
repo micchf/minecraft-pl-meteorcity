@@ -26,11 +26,18 @@ public enum Message {
     CITY_PLAYER_NOT_OWNER("city-player-not-owner"),
     CITY_PLAYER_CITY_IN_DISBAND("city-player-city-in-disband"),
     CITY_PLAYER_NOT_ROLE("city-player-not-role"),
+    CITY_PLAYER_NOT_IN_THE_CITY("city-player-not-in-the-city"),
+    CITY_PLAYER_SPAWN_UPDATE("city-player-spawn-update"),
+
+    INVALID_ROLE("invalid-role"),
 
     CITY_ERROR_DURING_DISBAND("city-error-during-disband"),
     CITY_DISBAND_SUCCESS("city-disband-success"),
     CITY_IN_DISBAND("city-in-disband"),
 
+    TARGET_IS_NOT_MEMBER_CITY("target-is-not-member-city"),
+    TARGET_ROLE_UPDATE("target-role-update"),
+    TARGET_NOT_ONLINE("target-not-online"),
     TARGET_YOU_ARE("target-you-are"),
     TARGET_HAS_A_CITY("target-has-a-city"),
     TARGET_SEND_INVITE("target-send-invite"),
