@@ -23,11 +23,9 @@ import ita.micc.meteorcity.database.query.QueryInfo;
 import ita.micc.meteorcity.enums.BuildType;
 import ita.micc.meteorcity.enums.MemberRole;
 import ita.micc.meteorcity.enums.SpawnPointType;
-import ita.micc.meteorcity.message.Message;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 import java.io.IOException;
 import java.nio.file.Files;

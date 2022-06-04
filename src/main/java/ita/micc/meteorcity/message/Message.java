@@ -42,6 +42,7 @@ public enum Message {
     TARGET_HAS_A_CITY("target-has-a-city"),
     TARGET_SEND_INVITE("target-send-invite"),
     TARGET_MESSAGE_TO_TARGET("target-message-to-target"),
+    TARGET_HAS_ALREADY_AN_INVITE("target-has-already-an-invite"),
 
     INVITE_YOU_HAVENT("invite-you-havent"),
     INVITE_EXPIRED("invite-expired"),

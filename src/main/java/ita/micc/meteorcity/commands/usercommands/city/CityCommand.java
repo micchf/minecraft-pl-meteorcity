@@ -24,6 +24,8 @@ public class CityCommand extends Command {
         register("disband", new CityDisbandCommand(plugin));
         register("setspawn", new CitySetSpawnCommand(plugin));
         register("setrole", new CitySetRoleCommand(plugin));
+        register("invite", new CityInviteCommand(plugin));
+        register("acceptinvite", new CityAcceptInviteCommand(plugin));
     }
 
     @Override

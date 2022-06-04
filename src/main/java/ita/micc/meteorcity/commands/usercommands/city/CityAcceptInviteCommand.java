@@ -15,7 +15,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
+/**
+ * /city acceptinvite
+ * @author Codeh.
+ */
 public record CityAcceptInviteCommand(MeteorCity plugin) implements CommandExecutor {
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         Player player = (Player) sender;
@@ -37,13 +42,21 @@ public record CityAcceptInviteCommand(MeteorCity plugin) implements CommandExecu
             plugin.getInvites().remove(playerUUID);
             return false;
         }
+        /* check if invite is expired */
         if (invite.expired()) {
             Message.INVITE_EXPIRED.send(player);
+            plugin.getInvites().remove(playerUUID);
+            return false;
+        }
+        PlayerCity playerCity = invite.getPlayerCity();
+        /* check if city is in disband */
+        if (playerCity.isDisband()) {
+            Message.CITY_IN_DISBAND.send(player);
+            plugin.getInvites().remove(playerUUID);
             return false;
         }
 
         /* player accept invite */
-        PlayerCity playerCity = invite.getPlayerCity();
         playerCity.addMember(playerUUID, MemberRole.CITTADINO);
         for (Member member : playerCity.getMembers()) {
             Player playerMember = Bukkit.getPlayer(UUID.fromString(member.getUUID()));

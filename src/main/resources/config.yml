@@ -11,6 +11,8 @@ messages:
   bad-syntax: "&c&l(!)&c Sintassi errata"
   not-online: "&c&l(!)&c Quel player non è online."
 
+  city-admin-refreshtemplates: "&a&l(!)&a Templates riavviati."
+
   city-player-has-already-a-city: "&c&l(!)&c Hai già una città."
   city-player-has-already-a-city-in-build: "&c&l(!)&c Stai già creando una città."
   city-player-hasnt-a-city: "&c&l(!)&c Non hai una città."
@@ -21,11 +23,11 @@ messages:
   city-player-not-in-the-city: "&c&l(!&c Devi essere in città per farlo."
   city-player-spawn-update: "&a&l(!)&a Spawn aggiornato."
 
+  invalid-role: "&c&l(!)&c Ruolo non valido."
+
   city-error-during-disband: "&c&l(!)&c Errore durante il disband."
   city-disband-success: "&a&l(!)&a Disband completato."
   city-in-disband: "&c&l(!)&c La città è attualmente in disband."
-
-  city-admin-refreshtemplates: "&a&l(!)&a Templates riavviati."
 
   target-is-not-member-city: "&c&l(!)&c Quel player non è un membro della tua isola."
   target-not-online: "&c&l(!)&c Quel player non è online."
@@ -33,6 +35,7 @@ messages:
   target-has-a-city: "&c&l(!)&C Quel player ha già una città"
   target-send-invite: "&a&l(!)&a Invito inviato con successo."
   target-message-to-target: "&a&l(!)&a Hai ricevuto un nuovo invito, fai /city acceptinvite per accettarlo."
+  target-has-already-an-invite: "&c&l(!)&c Quel player ha già un invito."
   target-role-update: "&a&l(!)&a Il tuo ruolo all'interno della città è stato aggiornato."
 
   invite-you-havent: "&c&l(!)&c Non hai inviti in sospeso."
