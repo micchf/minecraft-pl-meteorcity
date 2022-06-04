@@ -1,19 +1,24 @@
 package ita.micc.meteorcity.commands;
 
 import ita.micc.meteorcity.message.Message;
+import lombok.Getter;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Command root class
  * @author Codeh.
  */
-public abstract class Command implements CommandExecutor {
+@Getter
+public abstract class Command implements CommandExecutor, TabCompleter {
 
     private final Map<String, CommandExecutor> subCommands;
     private final String permissionRequired;
@@ -40,7 +45,7 @@ public abstract class Command implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, org.bukkit.command.@NotNull Command command, @NotNull String label, String[] args) {
         /* Check if for execute all commands is required a common permission */
         if (permissionRequired != null && !sender.hasPermission(permissionRequired)) {
             Message.NO_PERM.send(sender);
@@ -59,5 +64,21 @@ public abstract class Command implements CommandExecutor {
         return subCommandExecutor == null ? executeCommand(sender, command, label, args) : subCommandExecutor.onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
     }
 
+    @Override
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull org.bukkit.command.Command command, @NotNull String alias, @NotNull String[] args) {
+        /* Check if for tab all commands is required a common permission */
+        if (permissionRequired != null && !sender.hasPermission(permissionRequired)) {
+            return null;
+        }
+        /* Check if only player can tab all commands */
+        if (onlyPlayer && !(sender instanceof Player)) {
+            return null;
+        }
+
+        return tabComplete(sender, command, alias, args);
+    }
+
     public abstract boolean executeCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args);
+
+    public abstract List<String> tabComplete(CommandSender sender, org.bukkit.command.Command command, String alias, String[] args);
 }
