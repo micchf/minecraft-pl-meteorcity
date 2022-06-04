@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 
-/**  Controllare la class schematic, fare un oggetto
+/**  Fare custom events, on shutdown save all database to database city leave, city kick, city vist, city acceptvisit, sistemare i message
  * MeteorCity's main
  * @author Codeh.
  * @version 1.0

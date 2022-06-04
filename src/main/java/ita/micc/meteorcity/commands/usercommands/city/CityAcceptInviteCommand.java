@@ -1,19 +1,15 @@
 package ita.micc.meteorcity.commands.usercommands.city;
 
 import ita.micc.meteorcity.MeteorCity;
-import ita.micc.meteorcity.database.bindclass.Member;
 import ita.micc.meteorcity.enums.MemberRole;
 import ita.micc.meteorcity.message.Message;
 import ita.micc.meteorcity.playercity.PlayerCity;
 import ita.micc.meteorcity.playercity.PlayerCityInvite;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.UUID;
 
 /**
  * /city acceptinvite

@@ -32,6 +32,11 @@ public enum Message {
     CITY_PLAYER_TARGET_ROLE_UPDATE("city-player-target-role-update"),
     CITY_PLAYER_YOU_ARE_NO_LONGER_OWNER("city-player-you-are-no-longer-owner"),
 
+    CITY_PLAYER_YOU_ARE_ONLY_PLAYER("city-player-you-are-only-player"),
+    CITY_PLAYER_REMOVE_FROM_OWMER_ROLE("city-player-remove-from-owner-role"),
+    CITY_PLAYER_NEW_OWNER("city-player-new-owner"),
+    CITY_PLAYER_YOU_LEAVE("city-player-you-leave"),
+
     INVALID_ROLE("invalid-role"),
 
     CITY_ERROR_DURING_DISBAND("city-error-during-disband"),

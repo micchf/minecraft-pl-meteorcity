@@ -256,4 +256,17 @@ public class PlayerCity {
             }
         }
     }
+
+    /**
+     * Remove member from city
+     * @param UUID member
+     */
+    public void removeMember(String UUID) {
+        for (Member member : members) {
+            if (member.getUUID().equals(UUID)) {
+                members.remove(member);
+                membersMap.remove(UUID);
+            }
+        }
+    }
 }
