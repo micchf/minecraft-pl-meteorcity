@@ -2,6 +2,7 @@ package ita.micc.meteorcity;
 
 import ita.micc.meteorcity.citytemplate.CityTemplate;
 import ita.micc.meteorcity.citytemplate.utils.CityTemplateUtils;
+import ita.micc.meteorcity.commands.admincommands.cityadmin.CityAdminCommand;
 import ita.micc.meteorcity.commands.usercommands.city.CityCommand;
 import ita.micc.meteorcity.database.DatabaseInstance;
 import ita.micc.meteorcity.database.bindclass.SpawnPoint;
@@ -67,7 +68,9 @@ public final class MeteorCity extends JavaPlugin {
      */
     public void registerCommands() throws NullPointerException {
         CityCommand cityCommand = new CityCommand(null, true, this);
+        CityAdminCommand cityAdminCommand = new CityAdminCommand("cityadmin.admin", false, this);
         Objects.requireNonNull(getCommand("city")).setExecutor(cityCommand);
+        Objects.requireNonNull(getCommand("cityadmin")).setExecutor(cityAdminCommand);
     }
 
     /**
