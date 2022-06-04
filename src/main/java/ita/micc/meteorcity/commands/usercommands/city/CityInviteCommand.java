@@ -22,8 +22,8 @@ public record CityInviteCommand(MeteorCity plugin) implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         Player player = (Player) sender;
         String playerUUID = player.getUniqueId().toString();
-        /* check if command is /city invite */
-        if (args.length != 2) {
+        /* check if command is /city invite <playerName> */
+        if (args.length != 1) {
             Message.BAD_SYNTAX.send(player);
             return false;
         }

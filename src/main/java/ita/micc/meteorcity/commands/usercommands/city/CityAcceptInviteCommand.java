@@ -30,18 +30,17 @@ public record CityAcceptInviteCommand(MeteorCity plugin) implements CommandExecu
             Message.BAD_SYNTAX.send(player);
             return false;
         }
+        /* check if player has a city */
+        if (plugin.getCities().containsKey(playerUUID)) {
+            Message.CITY_PLAYER_HAS_ALREADY_A_CITY.send(player);
+            return false;
+        }
         /* Check if player has an invite */
         if (!plugin.getInvites().containsKey(playerUUID)) {
             Message.INVITE_YOU_HAVENT.send(player);
             return false;
         }
         PlayerCityInvite invite = plugin.getInvites().get(playerUUID);
-        /* check if player has a city */
-        if (plugin.getCities().containsKey(playerUUID)) {
-            Message.CITY_PLAYER_HAS_ALREADY_A_CITY.send(player);
-            plugin.getInvites().remove(playerUUID);
-            return false;
-        }
         /* check if invite is expired */
         if (invite.expired()) {
             Message.INVITE_EXPIRED.send(player);
