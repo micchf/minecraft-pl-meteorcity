@@ -1,10 +1,10 @@
-package ita.micc.meteorcity.commands.usercommands;
+package ita.micc.meteorcity.commands.usercommands.city;
 
 import ita.micc.meteorcity.MeteorCity;
 import ita.micc.meteorcity.enums.MemberRole;
 import ita.micc.meteorcity.message.Message;
 import ita.micc.meteorcity.playercity.PlayerCity;
-import org.apache.commons.lang3.EnumUtils;
+import ita.micc.meteorcity.playercity.PlayerCityInvite;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,20 +13,26 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * /city setrole <playerName>
+ * /city invite <playerName>
  * @author Codeh
  */
-public record CitySetRoleCommand(MeteorCity plugin) implements CommandExecutor {
+public record CityInviteCommand(MeteorCity plugin) implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         Player player = (Player) sender;
         String playerUUID = player.getUniqueId().toString();
-        /* check if command is /city go */
+        /* check if command is /city invite */
         if (args.length != 2) {
             Message.BAD_SYNTAX.send(player);
             return false;
         }
+        /* check if player has a city */
+        if (!plugin.getCities().containsKey(playerUUID)) {
+            Message.CITY_PLAYER_HASNT_A_CITY.send(player);
+            return false;
+        }
+        /* check if target is itself */
         if (args[0].equalsIgnoreCase(player.getName())) {
             Message.TARGET_YOU_ARE.send(player);
             return false;
@@ -38,9 +44,9 @@ public record CitySetRoleCommand(MeteorCity plugin) implements CommandExecutor {
             return false;
         }
         String targetUUID = target.getUniqueId().toString();
-        /* check if player has a city */
-        if (!plugin.getCities().containsKey(playerUUID)) {
-            Message.CITY_PLAYER_HASNT_A_CITY.send(player);
+        /* check if target has a city */
+        if (plugin.getCities().containsKey(targetUUID)) {
+            Message.TARGET_HAS_A_CITY.send(player);
             return false;
         }
         PlayerCity playerCity = plugin.getCities().get(playerUUID);
@@ -54,20 +60,12 @@ public record CitySetRoleCommand(MeteorCity plugin) implements CommandExecutor {
             Message.CITY_PLAYER_NOT_ROLE.send(player);
             return false;
         }
-        /* check if is valid role */
-        if (!EnumUtils.isValidEnum(MemberRole.class, args[1].toUpperCase())) {
-            Message.INVALID_ROLE.send(player);
-            return false;
-        }
-        /* check if target is a city's member */
-        if (!playerCity.isMember(targetUUID)) {
-            Message.TARGET_IS_NOT_MEMBER_CITY.send(player);
-            return false;
-        }
 
-        /* update target role */
-        playerCity.updateMemberRole(targetUUID, MemberRole.valueOf(args[1].toUpperCase()));
-        Message.TARGET_ROLE_UPDATE.send(target);
+        /* send invite */
+        PlayerCityInvite invite = new PlayerCityInvite(System.currentTimeMillis(), playerCity);
+        Message.TARGET_SEND_INVITE.send(player);
+        plugin.getInvites().put(targetUUID, invite);
+        Message.TARGET_MESSAGE_TO_TARGET.send(target);
         return false;
     }
 }

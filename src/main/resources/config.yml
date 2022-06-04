@@ -37,7 +37,7 @@ messages:
 
   invite-you-havent: "&c&l(!)&c Non hai inviti in sospeso."
   invite-expired: "&c&l(!)&c Invito scaduto."
-  invite-success-join: "&a&l(!)&a Sei entrato in città."
+  invite-success-join: "&a&l(!)&a {player} è entrato in città."
 
   city-start-creation: "&a&l(!)&a Creazione città in corso."
   city-success-creation: "&a&l(!)&a Città creata con successo, fai /city go per andare nella tua città."

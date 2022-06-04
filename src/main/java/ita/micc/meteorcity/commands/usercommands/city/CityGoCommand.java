@@ -1,7 +1,6 @@
-package ita.micc.meteorcity.commands.usercommands;
+package ita.micc.meteorcity.commands.usercommands.city;
 
 import ita.micc.meteorcity.MeteorCity;
-import ita.micc.meteorcity.enums.MemberRole;
 import ita.micc.meteorcity.message.Message;
 import ita.micc.meteorcity.playercity.PlayerCity;
 import org.bukkit.command.Command;
@@ -11,10 +10,10 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * /city setspawn
+ * /city go
  * @author Codeh
  */
-public record CitySetSpawnCommand(MeteorCity plugin) implements CommandExecutor {
+public record CityGoCommand(MeteorCity plugin) implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -36,22 +35,9 @@ public record CitySetSpawnCommand(MeteorCity plugin) implements CommandExecutor 
             Message.CITY_IN_DISBAND.send(player);
             return false;
         }
-        /* check if player is presidente or funzionario */
-        if (!(playerCity.getMemberByUUID(playerUUID) == MemberRole.PRESIDENTE || playerCity.getMemberByUUID(playerUUID) == MemberRole.FUNZIONARIO)) {
-            Message.CITY_PLAYER_NOT_ROLE.send(player);
-            return false;
-        }
-        /* check if player is in the city */
-        if (!playerCity.getMain().contains(player.getLocation())) {
-            Message.CITY_PLAYER_NOT_IN_THE_CITY.send(player);
-            return false;
-        }
 
-        /* update city spawn */
-        playerCity.getPlayerSpawn().setX(player.getLocation().getBlockX());
-        playerCity.getPlayerSpawn().setY(player.getLocation().getBlockY());
-        playerCity.getPlayerSpawn().setZ(player.getLocation().getBlockZ());
-        Message.CITY_PLAYER_SPAWN_UPDATE.send(player);
+        /* teleport player to city's spawn */
+        player.teleport(playerCity.getPlayerSpawn().toLocation());
         return false;
     }
 }

@@ -2,7 +2,7 @@ package ita.micc.meteorcity;
 
 import ita.micc.meteorcity.citytemplate.CityTemplate;
 import ita.micc.meteorcity.citytemplate.utils.CityTemplateUtils;
-import ita.micc.meteorcity.commands.usercommands.CityCommand;
+import ita.micc.meteorcity.commands.usercommands.city.CityCommand;
 import ita.micc.meteorcity.database.DatabaseInstance;
 import ita.micc.meteorcity.database.bindclass.SpawnPoint;
 import ita.micc.meteorcity.database.config.MySQL;
@@ -10,6 +10,7 @@ import ita.micc.meteorcity.database.query.QueryInfo;
 import ita.micc.meteorcity.enums.SpawnPointType;
 import ita.micc.meteorcity.listener.PlayerJoinInits;
 import ita.micc.meteorcity.playercity.PlayerCity;
+import ita.micc.meteorcity.playercity.PlayerCityInvite;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -31,14 +32,16 @@ public final class MeteorCity extends JavaPlugin {
     private @Getter DatabaseInstance databaseInstance;
     private @Getter HashMap<String, CityTemplate> cityTemplates;
     private @Getter HashMap<String, PlayerCity> cities;
+    private @Getter HashMap<String, PlayerCityInvite> invites;
     private @Getter SpawnPoint lastPoint;
 
     @Override
     public void onEnable() {
         cityTemplates = new HashMap<>();
         cities = new HashMap<>();
-        saveDefaultConfig();
+        invites = new HashMap<>();
         try {
+            saveDefaultConfig();
             importAllTemplates();
             initDatabase();
             loadLastPoint();

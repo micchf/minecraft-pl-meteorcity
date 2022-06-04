@@ -69,6 +69,17 @@ public enum Message {
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', messages.get(text)));
     }
 
+    /**
+     * Send a message with a message's replace
+     * @param sender who will be sent message
+     * @param s string to be replaced
+     * @param replace text that will be replaced
+     */
+    public void sendWithReplace(CommandSender sender, String s, String replace) {
+        String msg = messages.get(text).replaceAll(s, replace);
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
+    }
+
     static {
         MeteorCity plugin = MeteorCity.getPlugin(MeteorCity.class);
         for(String key : Objects.requireNonNull(plugin.getConfig().getConfigurationSection("messages")).getKeys(false)) {

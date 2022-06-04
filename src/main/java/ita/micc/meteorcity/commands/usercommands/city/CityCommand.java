@@ -1,4 +1,4 @@
-package ita.micc.meteorcity.commands.usercommands;
+package ita.micc.meteorcity.commands.usercommands.city;
 
 import ita.micc.meteorcity.MeteorCity;
 import ita.micc.meteorcity.commands.Command;
