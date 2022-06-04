@@ -68,6 +68,7 @@ public record CitySetRoleCommand(MeteorCity plugin) implements CommandExecutor {
 
         /* update target role */
         playerCity.updateMemberRole(targetUUID, MemberRole.valueOf(args[1].toUpperCase()));
+        Message.CITY_PLAYER_TARGET_ROLE_UPDATE.send(player);
         Message.TARGET_ROLE_UPDATE.send(target);
         return false;
     }

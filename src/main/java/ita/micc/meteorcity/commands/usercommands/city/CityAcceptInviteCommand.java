@@ -56,13 +56,15 @@ public record CityAcceptInviteCommand(MeteorCity plugin) implements CommandExecu
         }
 
         /* player accept invite */
-        playerCity.addMember(playerUUID, MemberRole.CITTADINO);
         for (Member member : playerCity.getMembers()) {
             Player playerMember = Bukkit.getPlayer(UUID.fromString(member.getUUID()));
             if (playerMember != null) {
-                Message.INVITE_SUCCESS_JOIN.sendWithReplace(playerMember, "{player}", player.getName());
+                Message.INVITE_SUCCESS_JOIN.send(playerMember);
             }
         }
+        Message.CITY_PLAYER_JOIN_CITY.send(player);
+        playerCity.addMember(playerUUID, MemberRole.CITTADINO);
+        plugin.getCities().put(playerUUID, playerCity);
         return false;
     }
 }

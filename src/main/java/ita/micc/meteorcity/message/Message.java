@@ -28,6 +28,8 @@ public enum Message {
     CITY_PLAYER_NOT_ROLE("city-player-not-role"),
     CITY_PLAYER_NOT_IN_THE_CITY("city-player-not-in-the-city"),
     CITY_PLAYER_SPAWN_UPDATE("city-player-spawn-update"),
+    CITY_PLAYER_JOIN_CITY("city-player-join-city"),
+    CITY_PLAYER_TARGET_ROLE_UPDATE("city-player-target-role-update"),
 
     INVALID_ROLE("invalid-role"),
 

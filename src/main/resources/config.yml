@@ -22,6 +22,8 @@ messages:
   city-player-not-role: "&c&l(!)&c Non hai il ruolo per fare questo."
   city-player-not-in-the-city: "&c&l(!&c Devi essere in città per farlo."
   city-player-spawn-update: "&a&l(!)&a Spawn aggiornato."
+  city-player-join-city: "&a&l(!)&a Sei entrato in città."
+  city-player-target-role-update:  "&a&l(!)&a Ruolo aggiornato con successo."
 
   invalid-role: "&c&l(!)&c Ruolo non valido."
 
