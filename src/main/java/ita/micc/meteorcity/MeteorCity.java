@@ -12,8 +12,10 @@ import ita.micc.meteorcity.enums.SpawnPointType;
 import ita.micc.meteorcity.listener.PlayerJoinInits;
 import ita.micc.meteorcity.playercity.PlayerCity;
 import ita.micc.meteorcity.playercity.PlayerCityInvite;
+import ita.micc.meteorcity.worldutils.EmptyChunkGenerator;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.WorldCreator;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -23,7 +25,7 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 
-/**
+/**  Controllare la class schematic, fare un oggetto. Controllare se togliere city_in_disband
  * MeteorCity's main
  * @author Codeh.
  * @version 1.0
@@ -44,6 +46,7 @@ public final class MeteorCity extends JavaPlugin {
         try {
             saveDefaultConfig();
             importAllTemplates();
+            loadCitiesWorld();
             initDatabase();
             loadLastPoint();
             showLastPointInLog();
@@ -87,6 +90,21 @@ public final class MeteorCity extends JavaPlugin {
         saveDefaultConfig();
         cityTemplates.clear();
         importAllTemplates();
+    }
+
+    /**
+     * Check if cities world exist, if not create.
+     */
+    public void loadCitiesWorld() {
+        if (!(Bukkit.getWorld("Cities") == null)) {
+            getLogger().info("world Cities caricato.");
+            return;
+        }
+        getLogger().info("Creazione mondo Cities..");
+        WorldCreator wc = new WorldCreator("Cities");
+        wc.generator(new EmptyChunkGenerator());
+        Bukkit.getWorlds().add(wc.createWorld());
+        getLogger().info("world Cities creato.");
     }
 
     /**
