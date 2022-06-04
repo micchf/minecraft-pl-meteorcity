@@ -97,14 +97,11 @@ public final class MeteorCity extends JavaPlugin {
      */
     public void loadCitiesWorld() {
         if (!(Bukkit.getWorld("Cities") == null)) {
-            getLogger().info("world Cities caricato.");
             return;
         }
-        getLogger().info("Creazione mondo Cities..");
         WorldCreator wc = new WorldCreator("Cities");
         wc.generator(new EmptyChunkGenerator());
         Bukkit.getWorlds().add(wc.createWorld());
-        getLogger().info("world Cities creato.");
     }
 
     /**

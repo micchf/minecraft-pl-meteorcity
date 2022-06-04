@@ -48,13 +48,7 @@ public record CityAcceptInviteCommand(MeteorCity plugin) implements CommandExecu
             return false;
         }
         PlayerCity playerCity = invite.getPlayerCity();
-        /* check if city is in disband */
-        if (playerCity.isDisband()) {
-            Message.CITY_IN_DISBAND.send(player);
-            plugin.getInvites().remove(playerUUID);
-            return false;
-        }
-
+        
         /* player accept invite */
         for (Member member : playerCity.getMembers()) {
             Player playerMember = Bukkit.getPlayer(UUID.fromString(member.getUUID()));

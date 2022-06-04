@@ -30,11 +30,6 @@ public record CityGoCommand(MeteorCity plugin) implements CommandExecutor {
             return false;
         }
         PlayerCity playerCity = plugin.getCities().get(playerUUID);
-        /* check if city is in disband */
-        if (playerCity.isDisband()) {
-            Message.CITY_IN_DISBAND.send(player);
-            return false;
-        }
 
         /* teleport player to city's spawn */
         player.teleport(playerCity.getPlayerSpawn().toLocation());

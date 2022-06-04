@@ -45,11 +45,6 @@ public record CitySetRoleCommand(MeteorCity plugin) implements CommandExecutor {
             return false;
         }
         PlayerCity playerCity = plugin.getCities().get(playerUUID);
-        /* check if city is in disband */
-        if (playerCity.isDisband()) {
-            Message.CITY_IN_DISBAND.send(player);
-            return false;
-        }
         /* check if player is presidente */
         if (!(playerCity.getMemberByUUID(playerUUID) == MemberRole.PRESIDENTE)) {
             Message.CITY_PLAYER_NOT_ROLE.send(player);

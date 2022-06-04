@@ -30,12 +30,7 @@ public record CityDisbandCommand(MeteorCity plugin) implements CommandExecutor {
             Message.CITY_PLAYER_HASNT_A_CITY.send(player);
             return false;
         }
-        /* check if city is already in disband */
         PlayerCity playerCity = plugin.getCities().get(playerUUID);
-        if (playerCity.isDisband()) {
-            Message.CITY_IN_DISBAND.send(player);
-            return false;
-        }
         /* check if player is city's owner */
         if (!(playerCity.getMemberByUUID(playerUUID) == MemberRole.PRESIDENTE)) {
             Message.CITY_PLAYER_NOT_OWNER.send(player);
