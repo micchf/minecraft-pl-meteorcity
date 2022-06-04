@@ -12,7 +12,7 @@ import ita.micc.meteorcity.enums.SpawnPointType;
 import ita.micc.meteorcity.listener.PlayerJoinInits;
 import ita.micc.meteorcity.playercity.PlayerCity;
 import ita.micc.meteorcity.playercity.PlayerCityInvite;
-import ita.micc.meteorcity.worldutils.EmptyChunkGenerator;
+import ita.micc.meteorcity.world.EmptyChunkGenerator;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.WorldCreator;
@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 
-/**  Controllare la class schematic, fare un oggetto. Controllare se togliere city_in_disband, mettere tab complete
+/**  Controllare la class schematic, fare un oggetto
  * MeteorCity's main
  * @author Codeh.
  * @version 1.0

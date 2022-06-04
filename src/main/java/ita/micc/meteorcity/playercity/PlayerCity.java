@@ -23,6 +23,7 @@ import ita.micc.meteorcity.database.query.QueryInfo;
 import ita.micc.meteorcity.enums.BuildType;
 import ita.micc.meteorcity.enums.MemberRole;
 import ita.micc.meteorcity.enums.SpawnPointType;
+import ita.micc.meteorcity.schematic.Schematic;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -161,27 +162,7 @@ public class PlayerCity {
      * @return true if pasted, false if not.
      */
     public boolean pasteCitySchematic() {
-        Clipboard clipboard;
-        ClipboardFormat format = ClipboardFormats.findByFile(cityTemplate.getSchematicFile());
-        try (ClipboardReader reader = Objects.requireNonNull(format).getReader(Files.newInputStream(cityTemplate.getSchematicFile().toPath()))) {
-            clipboard = reader.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-        try (EditSession editSession = WorldEdit.getInstance().newEditSession(BukkitAdapter.adapt(Bukkit.getWorld(main.getWorld())))) {
-            Operation operation = new ClipboardHolder(clipboard)
-                    .createPaste(editSession)
-                    .to(BlockVector3.at(main.getMinX(), main.getMinY(), main.getMinZ()))
-                    .build();
-            Operations.complete(operation);
-            editSession.close();
-            clipboard.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
+        return new Schematic(main.getMinX(), main.getMinY(), main.getMinZ(), main.getWorld(), cityTemplate.getSchematicFile()).paste();
     }
 
     /**

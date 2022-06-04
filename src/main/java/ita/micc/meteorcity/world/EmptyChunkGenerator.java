@@ -1,4 +1,4 @@
-package ita.micc.meteorcity.worldutils;
+package ita.micc.meteorcity.world;
 
 import org.bukkit.World;
 import org.bukkit.generator.ChunkGenerator;
