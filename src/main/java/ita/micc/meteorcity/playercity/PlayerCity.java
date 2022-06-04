@@ -1,16 +1,5 @@
 package ita.micc.meteorcity.playercity;
 
-import com.sk89q.worldedit.EditSession;
-import com.sk89q.worldedit.WorldEdit;
-import com.sk89q.worldedit.bukkit.BukkitAdapter;
-import com.sk89q.worldedit.extent.clipboard.Clipboard;
-import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
-import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats;
-import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
-import com.sk89q.worldedit.function.operation.Operation;
-import com.sk89q.worldedit.function.operation.Operations;
-import com.sk89q.worldedit.math.BlockVector3;
-import com.sk89q.worldedit.session.ClipboardHolder;
 import ita.micc.meteorcity.MeteorCity;
 import ita.micc.meteorcity.citytemplate.CityTemplate;
 import ita.micc.meteorcity.citytemplate.Pivot;
@@ -27,9 +16,8 @@ import ita.micc.meteorcity.schematic.Schematic;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.*;
 
 /** PlayerCity for cache
@@ -254,5 +242,18 @@ public class PlayerCity {
         }
         membersMap.remove(UUID);
         membersMap.put(UUID, memberRole);
+    }
+
+    /**
+     * Send a message to all member's city
+     * @param message which you want to send
+     */
+    public void sendMessageAllMembers(String message) {
+        for (Member member : members) {
+            Player playerMember = Bukkit.getPlayer(UUID.fromString(member.getUUID()));
+            if (playerMember != null) {
+                playerMember.sendMessage(message);
+            }
+        }
     }
 }

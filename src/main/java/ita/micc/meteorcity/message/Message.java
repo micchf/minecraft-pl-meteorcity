@@ -74,14 +74,14 @@ public enum Message {
     }
 
     /**
-     * Send a message with a message's replace
-     * @param sender who will be sent message
+     * Get a message replaced
      * @param s string to be replaced
      * @param replace text that will be replaced
+     * @return new text replaced
      */
-    public void sendWithReplace(CommandSender sender, String s, String replace) {
+    public String valueReplaced(String s, String replace) {
         String msg = messages.get(text).replaceAll(s, replace);
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
+        return ChatColor.translateAlternateColorCodes('&', msg);
     }
 
     static {
