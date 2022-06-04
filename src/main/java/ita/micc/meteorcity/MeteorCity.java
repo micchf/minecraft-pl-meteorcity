@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 
-/**  Controllare la class schematic, fare un oggetto. Controllare se togliere city_in_disband, fare che non si può impostare presidente,
+/**  Controllare la class schematic, fare un oggetto. Controllare se togliere city_in_disband, mettere tab complete
  * MeteorCity's main
  * @author Codeh.
  * @version 1.0

@@ -50,8 +50,8 @@ public record CitySetRoleCommand(MeteorCity plugin) implements CommandExecutor {
             Message.CITY_IN_DISBAND.send(player);
             return false;
         }
-        /* check if player is presidente or funzionario */
-        if (!(playerCity.getMemberByUUID(playerUUID) == MemberRole.PRESIDENTE || playerCity.getMemberByUUID(playerUUID) == MemberRole.FUNZIONARIO)) {
+        /* check if player is presidente */
+        if (!(playerCity.getMemberByUUID(playerUUID) == MemberRole.PRESIDENTE)) {
             Message.CITY_PLAYER_NOT_ROLE.send(player);
             return false;
         }
@@ -67,6 +67,11 @@ public record CitySetRoleCommand(MeteorCity plugin) implements CommandExecutor {
         }
 
         /* update target role */
+        /* check if player who update member role is presidente */
+        if (EnumUtils.getEnumIgnoreCase(MemberRole.class, args[1].toUpperCase()) == MemberRole.PRESIDENTE) {
+            playerCity.updateMemberRole(playerUUID, MemberRole.CITTADINO);
+            Message.CITY_PLAYER_YOU_ARE_NO_LONGER_OWNER.send(player);
+        }
         playerCity.updateMemberRole(targetUUID, MemberRole.valueOf(args[1].toUpperCase()));
         Message.CITY_PLAYER_TARGET_ROLE_UPDATE.send(player);
         Message.TARGET_ROLE_UPDATE.send(target);

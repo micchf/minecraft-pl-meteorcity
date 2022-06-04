@@ -30,6 +30,7 @@ public enum Message {
     CITY_PLAYER_SPAWN_UPDATE("city-player-spawn-update"),
     CITY_PLAYER_JOIN_CITY("city-player-join-city"),
     CITY_PLAYER_TARGET_ROLE_UPDATE("city-player-target-role-update"),
+    CITY_PLAYER_YOU_ARE_NO_LONGER_OWNER("city-player-you-are-no-longer-owner"),
 
     INVALID_ROLE("invalid-role"),
 

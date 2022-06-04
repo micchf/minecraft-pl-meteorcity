@@ -24,6 +24,7 @@ messages:
   city-player-spawn-update: "&a&l(!)&a Spawn aggiornato."
   city-player-join-city: "&a&l(!)&a Sei entrato in città."
   city-player-target-role-update:  "&a&l(!)&a Ruolo aggiornato con successo."
+  city-player-you-are-no-longer-owner: "&c&l(!)&c Non sei più il presidente della città, avendo passato il tuo ruolo ad un altro membro."
 
   invalid-role: "&c&l(!)&c Ruolo non valido."
 
