@@ -26,6 +26,11 @@ messages:
   city-player-target-role-update:  "&a&l(!)&a Ruolo aggiornato con successo."
   city-player-you-are-no-longer-owner: "&c&l(!)&c Non sei più il presidente della città, avendo passato il tuo ruolo ad un altro membro."
 
+  city-player-you-are-only-player: "&c&l(!)&c Sei l'unico membro della città, non conviene fare /city disband ?"
+  city-player-remove-from-owner-role: "&c&l(!)&c Sei stato rimosso dal ruolo di presidente."
+  city-player-new-owner: "&c&l(!)&c {player} è il nuovo presidente della città."
+  city-player-you-leave: "&c&l(!)&c sei uscito della città."
+
   invalid-role: "&c&l(!)&c Ruolo non valido."
 
   city-error-during-disband: "&c&l(!)&c Errore durante il disband."
