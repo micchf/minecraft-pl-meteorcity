@@ -82,7 +82,8 @@ public record CityNewCommand(MeteorCity plugin) implements CommandExecutor {
                 /* add city into hashmap, then remove "city_in_build" */
                 plugin.getCities().put(playerUUID, playerCity); /*  */
                 player.removeMetadata("city_in_build", plugin);
-                Message.CITY_SUCCESS_CREATION.send(player);
+                Player owner = playerCity.getAllMembersOnline().get(0);
+                Message.CITY_SUCCESS_CREATION.send(owner);
             });
         });
         return false;
