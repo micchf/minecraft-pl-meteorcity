@@ -26,14 +26,14 @@ public record CityKickCommand(MeteorCity plugin) implements CommandExecutor {
             Message.BAD_SYNTAX.send(player);
             return false;
         }
-        /* check if target is itself */
-        if (args[0].equalsIgnoreCase(player.getName())) {
-            Message.TARGET_YOU_ARE.send(player);
-            return false;
-        }
         /* check if player has a city */
         if (!plugin.getCities().containsKey(playerUUID)) {
             Message.CITY_PLAYER_HASNT_A_CITY.send(player);
+            return false;
+        }
+        /* check if target is itself */
+        if (args[0].equalsIgnoreCase(player.getName())) {
+            Message.TARGET_YOU_ARE.send(player);
             return false;
         }
         /* check if target is online */

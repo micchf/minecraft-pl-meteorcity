@@ -27,6 +27,11 @@ public record CitySetRoleCommand(MeteorCity plugin) implements CommandExecutor {
             Message.BAD_SYNTAX.send(player);
             return false;
         }
+        /* check if player has a city */
+        if (!plugin.getCities().containsKey(playerUUID)) {
+            Message.CITY_PLAYER_HASNT_A_CITY.send(player);
+            return false;
+        }
         /* check if target is itself */
         if (args[0].equalsIgnoreCase(player.getName())) {
             Message.TARGET_YOU_ARE.send(player);
@@ -39,11 +44,6 @@ public record CitySetRoleCommand(MeteorCity plugin) implements CommandExecutor {
             return false;
         }
         String targetUUID = target.getUniqueId().toString();
-        /* check if player has a city */
-        if (!plugin.getCities().containsKey(playerUUID)) {
-            Message.CITY_PLAYER_HASNT_A_CITY.send(player);
-            return false;
-        }
         PlayerCity playerCity = plugin.getCities().get(playerUUID);
         /* check if player is presidente */
         MemberRole playerRole = playerCity.getMemberRole(playerUUID);
