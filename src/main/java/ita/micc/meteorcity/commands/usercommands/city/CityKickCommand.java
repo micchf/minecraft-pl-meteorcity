@@ -50,7 +50,7 @@ public record CityKickCommand(MeteorCity plugin) implements CommandExecutor {
             return false;
         }
         /* check if player is city's owner */
-        if (playerCity.getMemberRole(playerUUID) == MemberRole.PRESIDENTE) {
+        if (!(playerCity.getMemberRole(playerUUID) == MemberRole.PRESIDENTE)) {
             Message.CITY_PLAYER_NOT_ROLE.send(player);
             return false;
         }
@@ -58,7 +58,7 @@ public record CityKickCommand(MeteorCity plugin) implements CommandExecutor {
         /* kick player */
         playerCity.removeMember(targetUUID);
         plugin.getCities().remove(targetUUID);
-        playerCity.sendMessageAllMembers(Message.CITY_PLAYER_KICK_MEMBER.valueReplaced("{player}", target.getName()));
+        playerCity.sendMessageAllMembers(Message.CITY_PLAYER_KICK_MEMBER.valueReplaced("%player%", target.getName()));
         target.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
         return false;
     }

@@ -49,13 +49,14 @@ public record CityLeaveCommand(MeteorCity plugin) implements CommandExecutor {
             playerCity.updateMemberRole(member.getUUID(), MemberRole.PRESIDENTE);
             String playerNewOwnerName = Bukkit.getOfflinePlayer(UUID.fromString(member.getUUID())).getName();
             Message.CITY_PLAYER_REMOVE_FROM_OWMER_ROLE.send(player);
-            playerCity.sendMessageAllMembers(Message.CITY_PLAYER_NEW_OWNER.valueReplaced("{player}", playerNewOwnerName));
+            playerCity.sendMessageAllMembers(Message.CITY_PLAYER_NEW_OWNER.valueReplaced("%player%", playerNewOwnerName));
         }
 
         /* member leave from city */
         playerCity.removeMember(playerUUID);
         plugin.getCities().remove(playerUUID);
         player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
+        playerCity.sendMessageAllMembers(Message.CITY_PLAYER_LEAVE_CITY.valueReplaced("%player%", player.getName()));
         Message.CITY_PLAYER_YOU_LEAVE.send(player);
         return false;
     }

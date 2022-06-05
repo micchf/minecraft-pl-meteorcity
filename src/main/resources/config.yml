@@ -28,9 +28,10 @@ messages:
 
   city-player-you-are-only-player: "&c&l(!)&c Sei l'unico membro della città, non conviene fare /city disband ?"
   city-player-remove-from-owner-role: "&c&l(!)&c Sei stato rimosso dal ruolo di presidente."
-  city-player-new-owner: "&c&l(!)&c {player} è il nuovo presidente della città."
+  city-player-new-owner: "&c&l(!)&c %player% è il nuovo presidente della città."
   city-player-you-leave: "&c&l(!)&c sei uscito della città."
-  city-player-kick-member: "&c&l(!)&c {player} è stato kickato dalla città."
+  city-player-kick-member: "&c&l(!)&c %player% è stato kickato dalla città."
+  city-player-leave-city: "&c&l(!)&c %player% è uscito dalla città."
 
   invalid-role: "&c&l(!)&c Ruolo non valido."
 
@@ -49,7 +50,7 @@ messages:
 
   invite-you-havent: "&c&l(!)&c Non hai inviti in sospeso."
   invite-expired: "&c&l(!)&c Invito scaduto."
-  invite-success-join: "&a&l(!)&a {player} è entrato in città."
+  invite-success-join: "&a&l(!)&a %player% è entrato in città."
 
   city-start-creation: "&a&l(!)&a Creazione città in corso."
   city-success-creation: "&a&l(!)&a Città creata con successo, fai /city go per andare nella tua città."
