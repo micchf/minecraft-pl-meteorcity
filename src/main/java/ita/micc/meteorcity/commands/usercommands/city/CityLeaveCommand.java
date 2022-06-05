@@ -53,7 +53,8 @@ public record CityLeaveCommand(MeteorCity plugin) implements CommandExecutor {
         }
 
         /* member leave from city */
-        playerCity.removeMember(playerUUID, plugin);
+        playerCity.removeMember(playerUUID);
+        plugin.getCities().remove(playerUUID);
         player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
         playerCity.sendMessageAllMembers(Message.CITY_PLAYER_LEAVE_CITY.valueReplaced("%player%", player.getName()));
         Message.CITY_PLAYER_YOU_LEAVE.send(player);

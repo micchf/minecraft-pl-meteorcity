@@ -67,7 +67,7 @@ public record CityInviteCommand(MeteorCity plugin) implements CommandExecutor {
         PlayerCityInvite invite = new PlayerCityInvite(System.currentTimeMillis(), playerCity);
         Message.TARGET_SEND_INVITE.send(player);
         plugin.getInvites().put(targetUUID, invite);
-        target.sendMessage(Message.TARGET_MESSAGE_TO_TARGET.valueReplaced("%player%", target.getName()));
+        target.sendMessage(Message.TARGET_MESSAGE_TO_TARGET.valueReplaced("%player%", player.getName()));
         return false;
     }
 }

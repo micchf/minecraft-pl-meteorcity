@@ -209,11 +209,10 @@ public class PlayerCity {
      * @param UUID of player will be a member.
      * @param memberRole member's role.
      */
-    public void addMember(String UUID, MemberRole memberRole, MeteorCity plugin) {
+    public void addMember(String UUID, MemberRole memberRole) {
         Member member = new Member(UUID, memberRole.value());
         member.setIDCity(city.getID());
         members.put(UUID, member);
-        plugin.getCities().put(UUID, this);
     }
 
     /**
@@ -262,13 +261,8 @@ public class PlayerCity {
      * Remove member from city
      * @param UUID member
      */
-    public void removeMember(String UUID, MeteorCity plugin) {
-        for (Member member : members.values()) {
-            if (member.getUUID().equals(UUID)) {
-                members.remove(UUID);
-                plugin.getCities().remove(UUID);
-            }
-        }
+    public void removeMember(String UUID) {
+        members.remove(UUID);
     }
 
     /**
@@ -302,7 +296,7 @@ public class PlayerCity {
      */
     public Member getRandomMemberExcludeUUID(String UUID) {
         for (Member member : members.values()) {
-            if (!member.getUUID().equals(UUID)) {
+            if (!member.getUUID().equalsIgnoreCase(UUID)) {
                 return member;
             }
         }
