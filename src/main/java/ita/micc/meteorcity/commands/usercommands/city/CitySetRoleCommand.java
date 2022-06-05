@@ -67,7 +67,10 @@ public record CitySetRoleCommand(MeteorCity plugin) implements CommandExecutor {
         if (EnumUtils.getEnumIgnoreCase(MemberRole.class, args[1].toUpperCase()) == MemberRole.PRESIDENTE) {
             playerCity.updateMemberRole(playerUUID, MemberRole.CITTADINO);
             Message.CITY_PLAYER_YOU_ARE_NO_LONGER_OWNER.send(player);
+            Message.TARGET_ROLE_UPDATE.send(target);
+            return false;
         }
+
         playerCity.updateMemberRole(targetUUID, MemberRole.valueOf(args[1].toUpperCase()));
         Message.CITY_PLAYER_TARGET_ROLE_UPDATE.send(player);
         Message.TARGET_ROLE_UPDATE.send(target);

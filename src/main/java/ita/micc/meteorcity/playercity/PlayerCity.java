@@ -103,7 +103,8 @@ public class PlayerCity {
         this.wildZone = wildZone;
         this.cityTemplate = cityTemplate;
 
-        addMember(ownerUUID, MemberRole.PRESIDENTE);
+        Member owner = new Member(ownerUUID, MemberRole.PRESIDENTE.value());
+        members.put(ownerUUID, owner);
     }
 
     /**
@@ -208,10 +209,11 @@ public class PlayerCity {
      * @param UUID of player will be a member.
      * @param memberRole member's role.
      */
-    public void addMember(String UUID, MemberRole memberRole) {
+    public void addMember(String UUID, MemberRole memberRole, MeteorCity plugin) {
         Member member = new Member(UUID, memberRole.value());
         member.setIDCity(city.getID());
         members.put(UUID, member);
+        plugin.getCities().put(UUID, this);
     }
 
     /**
@@ -241,9 +243,9 @@ public class PlayerCity {
         for (Member member : members.values()) {
             if (member.getUUID().equals(UUID)) {
                 member.setRole(memberRole.value());
+                return;
             }
         }
-        members.remove(UUID);
     }
 
     /**
@@ -260,10 +262,11 @@ public class PlayerCity {
      * Remove member from city
      * @param UUID member
      */
-    public void removeMember(String UUID) {
+    public void removeMember(String UUID, MeteorCity plugin) {
         for (Member member : members.values()) {
             if (member.getUUID().equals(UUID)) {
                 members.remove(UUID);
+                plugin.getCities().remove(UUID);
             }
         }
     }

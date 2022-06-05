@@ -56,10 +56,10 @@ public record CityKickCommand(MeteorCity plugin) implements CommandExecutor {
         }
 
         /* kick player */
-        playerCity.removeMember(targetUUID);
-        plugin.getCities().remove(targetUUID);
+        playerCity.removeMember(targetUUID, plugin);
         playerCity.sendMessageAllMembers(Message.CITY_PLAYER_KICK_MEMBER.valueReplaced("%player%", target.getName()));
         target.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
+        Message.CITY_PLAYER_YOU_ARE_KICKED.send(target);
         return false;
     }
 }

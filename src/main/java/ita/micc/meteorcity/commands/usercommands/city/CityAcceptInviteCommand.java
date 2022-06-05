@@ -48,8 +48,7 @@ public record CityAcceptInviteCommand(MeteorCity plugin) implements CommandExecu
         /* player accept invite */
         playerCity.sendMessageAllMembers(Message.INVITE_SUCCESS_JOIN.valueReplaced("%player%", player.getName()));
         Message.CITY_PLAYER_JOIN_CITY.send(player);
-        playerCity.addMember(playerUUID, MemberRole.CITTADINO);
-        plugin.getCities().put(playerUUID, playerCity);
+        playerCity.addMember(playerUUID, MemberRole.CITTADINO, plugin);
         plugin.getInvites().remove(playerUUID);
         return false;
     }

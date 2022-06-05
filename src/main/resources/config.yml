@@ -32,6 +32,7 @@ messages:
   city-player-you-leave: "&c&l(!)&c sei uscito della città."
   city-player-kick-member: "&c&l(!)&c %player% è stato kickato dalla città."
   city-player-leave-city: "&c&l(!)&c %player% è uscito dalla città."
+  city-player-you-are-kicked: "&c&l(!)&c Sei stato kickato dalla città."
 
   invalid-role: "&c&l(!)&c Ruolo non valido."
 
@@ -44,7 +45,7 @@ messages:
   target-you-are: "&c&l(!)&c Non puoi fare questo comando a te stesso."
   target-has-a-city: "&c&l(!)&C Quel player ha già una città"
   target-send-invite: "&a&l(!)&a Invito inviato con successo."
-  target-message-to-target: "&a&l(!)&a Hai ricevuto un nuovo invito, fai /city acceptinvite per accettarlo."
+  target-message-to-target: "&a&l(!)&a Hai ricevuto un nuovo invito da %player%, fai /city acceptinvite per accettarlo."
   target-has-already-an-invite: "&c&l(!)&c Quel player ha già un invito."
   target-role-update: "&a&l(!)&a Il tuo ruolo all'interno della città è stato aggiornato."
 

@@ -38,17 +38,18 @@ public record CityDisbandCommand(MeteorCity plugin) implements CommandExecutor {
 
         /* init city disband */
         playerCity.setDisband(true);
+        /* check if city is removed from database */
+        if (!playerCity.removeCityFromDatabase(plugin.getDatabaseInstance())) {
+            Message.CITY_ERROR_DURING_DISBAND.send(player);
+            return false;
+        }
+
         for (Player playerMember : playerCity.getAllMembersOnline()) {
             plugin.getCities().remove(playerMember.getUniqueId().toString());
             Message.CITY_PLAYER_CITY_IN_DISBAND.send(playerMember);
             if (playerCity.getMain().contains(playerMember.getLocation())) {
                 playerMember.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
             }
-        }
-        /* check if city is removed from database */
-        if (!playerCity.removeCityFromDatabase(plugin.getDatabaseInstance())) {
-            Message.CITY_ERROR_DURING_DISBAND.send(player);
-            return false;
         }
 
         /* city's disband complete, send message to city's owner */

@@ -38,6 +38,7 @@ public enum Message {
     CITY_PLAYER_YOU_LEAVE("city-player-you-leave"),
     CITY_PLAYER_KICK_MEMBER("city-player-kick-member"),
     CITY_PLAYER_LEAVE_CITY("city-player-leave-city"),
+    CITY_PLAYER_YOU_ARE_KICKED("city-player-you-are-kicked"),
 
     INVALID_ROLE("invalid-role"),
 
