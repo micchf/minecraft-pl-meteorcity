@@ -251,11 +251,8 @@ public class PlayerCity {
      * @param message which you want to send
      */
     public void sendMessageAllMembers(String message) {
-        for (Member member : members.values()) {
-            Player playerMember = Bukkit.getPlayer(UUID.fromString(member.getUUID()));
-            if (playerMember != null) {
-                playerMember.sendMessage(message);
-            }
+        for (Player member : getAllMembersOnline()) {
+            member.sendMessage(message);
         }
     }
 

@@ -32,9 +32,13 @@ public record PlayerJoinInits(MeteorCity plugin) implements Listener {
         if (player.hasMetadata("city_in_build")) {
             return;
         }
+        /* check if player has already a city in load */
+        if (player.hasMetadata("city_in_load")) {
+            return;
+        }
         /* check if a member has already city loaded into hashmap */
         for (PlayerCity playerCity : new HashSet<>(plugin.getCities().values())) {
-            if (playerCity.getMembersMap().containsKey(playerUUID)) {
+            if (playerCity.getMembers().containsKey(playerUUID)) {
                 plugin.getCities().put(playerUUID, playerCity);
                 return;
             }

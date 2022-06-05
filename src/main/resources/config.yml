@@ -30,6 +30,7 @@ messages:
   city-player-remove-from-owner-role: "&c&l(!)&c Sei stato rimosso dal ruolo di presidente."
   city-player-new-owner: "&c&l(!)&c {player} è il nuovo presidente della città."
   city-player-you-leave: "&c&l(!)&c sei uscito della città."
+  city-player-kick-member: "&c&l(!)&c {player} è stato kickato dalla città."
 
   invalid-role: "&c&l(!)&c Ruolo non valido."
 

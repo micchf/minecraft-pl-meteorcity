@@ -33,6 +33,7 @@ public class CityCommand extends Command {
         register("invite", new CityInviteCommand(plugin));
         register("acceptinvite", new CityAcceptInviteCommand(plugin));
         register("leave", new CityLeaveCommand(plugin));
+        register("kick", new CityKickCommand(plugin));
     }
 
     @Override
