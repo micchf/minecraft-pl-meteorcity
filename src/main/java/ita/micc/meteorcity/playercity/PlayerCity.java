@@ -15,7 +15,9 @@ import ita.micc.meteorcity.enums.SpawnPointType;
 import ita.micc.meteorcity.schematic.Schematic;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.EnumUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -31,9 +33,8 @@ public class PlayerCity {
     private final LocationZone main;
     private final LocationZone wildZone;
     private final SpawnPoint playerSpawn;
-    private final List<Member> members;
     private final CityTemplate cityTemplate;
-    private final HashMap<String, MemberRole> membersMap;
+    private final HashMap<String, Member> members;
 
     private @Setter boolean disband;
 
@@ -44,11 +45,10 @@ public class PlayerCity {
      * @param ownerUUID UUID who created city.
      */
     public PlayerCity(CityTemplate cityTemplate, SpawnPoint lastPoint, String ownerUUID) {
-        membersMap = new HashMap<>();
+        members = new HashMap<>();
         disband = false;
         City city = new City(0, cityTemplate.getName());
         Member member = new Member(ownerUUID, MemberRole.PRESIDENTE.value());
-        members = new ArrayList<>();
 
         Pivot playerSpawnPivot = cityTemplate.getPlayerSpawn();
         SpawnPoint playerSpawn = SpawnPoint.builder()
@@ -101,8 +101,9 @@ public class PlayerCity {
         this.townHall = townHall;
         this.main = main;
         this.wildZone = wildZone;
-        addMember(ownerUUID, MemberRole.PRESIDENTE);
         this.cityTemplate = cityTemplate;
+
+        addMember(ownerUUID, MemberRole.PRESIDENTE);
     }
 
     /**
@@ -111,7 +112,7 @@ public class PlayerCity {
      */
     public PlayerCity(int IDCity, MeteorCity plugin) {
         DatabaseInstance databaseInstance = plugin.getDatabaseInstance();
-        membersMap = new HashMap<>();
+        members = new HashMap<>();
         disband = false;
         QueryInfo queryInfo = new QueryInfo("SELECT * FROM cities WHERE ID = :ID", null);
         queryInfo.addParameter("ID", IDCity);
@@ -137,11 +138,12 @@ public class PlayerCity {
         queryInfo.addParameter("type", SpawnPointType.PLAYER_SPAWN.value());
         this.playerSpawn = databaseInstance.fetchClassData(SpawnPoint.class, queryInfo).get(0);
 
+        List<Member> membersGet;
         queryInfo = new QueryInfo("SELECT * FROM members WHERE IDCity = :IDCity", null);
         queryInfo.addParameter("IDCity", IDCity);
-        this.members = databaseInstance.fetchClassData(Member.class, queryInfo);
+        membersGet = databaseInstance.fetchClassData(Member.class, queryInfo);
 
-        members.forEach(member -> membersMap.put(member.getUUID(), MemberRole.valueOf(member.getRole())));
+        membersGet.forEach(member -> members.put(member.getUUID(), member));
         cityTemplate = plugin.getCityTemplates().get(city.getCityTemplate());
     }
 
@@ -176,7 +178,7 @@ public class PlayerCity {
         queries.add(new QueryInfo("INSERT INTO locations (minX,minY,minZ,maxX,maxY,maxZ,world,type,IDCity) VALUES " +
                 "(:minX,:minY,:minZ,:maxX,:maxY,:maxZ,:world,:type,:IDCity)", wildZone));
 
-        for (Member member : members) {
+        for (Member member : members.values()) {
             member.setIDCity(IDCity);
             queries.add(new QueryInfo("INSERT INTO members (UUID,role,IDCity) VALUES (:UUID,:role,:IDCity)", member));
         }
@@ -207,8 +209,9 @@ public class PlayerCity {
      * @param memberRole member's role.
      */
     public void addMember(String UUID, MemberRole memberRole) {
-        members.add(new Member(UUID, memberRole.value()));
-        membersMap.put(UUID, memberRole);
+        Member member = new Member(UUID, memberRole.value());
+        member.setIDCity(city.getID());
+        members.put(UUID, member);
     }
 
     /**
@@ -217,7 +220,7 @@ public class PlayerCity {
      * @return true if player is a member, false if not.
      */
     public boolean isMember(String UUID) {
-        return membersMap.containsKey(UUID);
+        return members.containsKey(UUID);
     }
 
     /**
@@ -225,8 +228,8 @@ public class PlayerCity {
      * @param UUID of player that will be checked.
      * @return member role.
      */
-    public MemberRole getMemberByUUID(String UUID) {
-        return membersMap.get(UUID);
+    public Member getMemberByUUID(String UUID) {
+        return members.get(UUID);
     }
 
     /**
@@ -235,13 +238,12 @@ public class PlayerCity {
      * @param memberRole new role
      */
     public void updateMemberRole(String UUID, MemberRole memberRole) {
-        for (Member member : members) {
+        for (Member member : members.values()) {
             if (member.getUUID().equals(UUID)) {
                 member.setRole(memberRole.value());
             }
         }
-        membersMap.remove(UUID);
-        membersMap.put(UUID, memberRole);
+        members.remove(UUID);
     }
 
     /**
@@ -249,7 +251,7 @@ public class PlayerCity {
      * @param message which you want to send
      */
     public void sendMessageAllMembers(String message) {
-        for (Member member : members) {
+        for (Member member : members.values()) {
             Player playerMember = Bukkit.getPlayer(UUID.fromString(member.getUUID()));
             if (playerMember != null) {
                 playerMember.sendMessage(message);
@@ -262,11 +264,58 @@ public class PlayerCity {
      * @param UUID member
      */
     public void removeMember(String UUID) {
-        for (Member member : members) {
+        for (Member member : members.values()) {
             if (member.getUUID().equals(UUID)) {
-                members.remove(member);
-                membersMap.remove(UUID);
+                members.remove(UUID);
             }
         }
+    }
+
+    /**
+     * Get all member's online in the server.
+     * @return a list with all member's online
+     */
+    public List<Player> getAllMembersOnline() {
+        List<Player> membersOnline = new ArrayList<>();
+        for (Member member : members.values()) {
+            Player playerMember = Bukkit.getPlayer(UUID.fromString(member.getUUID()));
+            if (playerMember != null) {
+                membersOnline.add(playerMember);
+            }
+        }
+        return membersOnline;
+    }
+
+    /**
+     * Get member role's member
+     * @param UUID member
+     * @return MemberRole enum
+     */
+    public MemberRole getMemberRole(String UUID) {
+        return EnumUtils.getEnum(MemberRole.class, members.get(UUID).getRole());
+    }
+
+    /**
+     * Get a random member, with can a member excluded
+     * @param UUID of member to be excluded
+     * @return random member, exclude UUID
+     */
+    public Member getRandomMemberExcludeUUID(String UUID) {
+        for (Member member : members.values()) {
+            if (!member.getUUID().equals(UUID)) {
+                return member;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Set new player by location
+     * @param location new location
+     */
+    public void setNewPlayerSpawn(Location location) {
+        playerSpawn.setX(location.getBlockX());
+        playerSpawn.setY(location.getBlockY());
+        playerSpawn.setZ(location.getBlockZ());
     }
 }

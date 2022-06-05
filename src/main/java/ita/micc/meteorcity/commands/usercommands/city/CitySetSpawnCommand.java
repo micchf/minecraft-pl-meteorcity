@@ -32,7 +32,8 @@ public record CitySetSpawnCommand(MeteorCity plugin) implements CommandExecutor 
         }
         PlayerCity playerCity = plugin.getCities().get(playerUUID);
         /* check if player is presidente or funzionario */
-        if (!(playerCity.getMemberByUUID(playerUUID) == MemberRole.PRESIDENTE || playerCity.getMemberByUUID(playerUUID) == MemberRole.FUNZIONARIO)) {
+        MemberRole playerRole = playerCity.getMemberRole(playerUUID);
+        if (!(playerRole == MemberRole.PRESIDENTE || playerRole == MemberRole.FUNZIONARIO)) {
             Message.CITY_PLAYER_NOT_ROLE.send(player);
             return false;
         }
@@ -43,9 +44,7 @@ public record CitySetSpawnCommand(MeteorCity plugin) implements CommandExecutor 
         }
 
         /* update city spawn */
-        playerCity.getPlayerSpawn().setX(player.getLocation().getBlockX());
-        playerCity.getPlayerSpawn().setY(player.getLocation().getBlockY());
-        playerCity.getPlayerSpawn().setZ(player.getLocation().getBlockZ());
+        playerCity.setNewPlayerSpawn(player.getLocation());
         Message.CITY_PLAYER_SPAWN_UPDATE.send(player);
         return false;
     }

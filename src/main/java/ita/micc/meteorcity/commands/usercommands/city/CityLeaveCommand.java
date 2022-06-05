@@ -12,6 +12,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.UUID;
+
 /**
  * /city leave
  * @author Codeh
@@ -35,16 +37,19 @@ public record CityLeaveCommand(MeteorCity plugin) implements CommandExecutor {
 
         PlayerCity playerCity = plugin.getCities().get(playerUUID);
         /* check if player is city's owner */
-        if (playerCity.getMembersMap().get(playerUUID) == MemberRole.PRESIDENTE) {
+        if (playerCity.getMemberRole(playerUUID) == MemberRole.PRESIDENTE) {
             /* check if owner is only city's member */
             if (playerCity.getMembers().size() == 1) {
                 Message.CITY_PLAYER_YOU_ARE_ONLY_PLAYER.send(player);
                 return false;
             }
-            Member member = playerCity.getMembers().get(2);
+
+            /* if owner, set new owner, random member */
+            Member member = playerCity.getRandomMemberExcludeUUID(playerUUID);
             playerCity.updateMemberRole(member.getUUID(), MemberRole.PRESIDENTE);
+            String playerNewOwnerName = Bukkit.getOfflinePlayer(UUID.fromString(member.getUUID())).getName();
             Message.CITY_PLAYER_REMOVE_FROM_OWMER_ROLE.send(player);
-            playerCity.sendMessageAllMembers(Message.CITY_PLAYER_NEW_OWNER.valueReplaced("{player}", "prova"));
+            playerCity.sendMessageAllMembers(Message.CITY_PLAYER_NEW_OWNER.valueReplaced("{player}", playerNewOwnerName));
         }
 
         playerCity.removeMember(playerUUID);

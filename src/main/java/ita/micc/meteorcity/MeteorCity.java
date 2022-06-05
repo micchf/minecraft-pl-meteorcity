@@ -25,8 +25,8 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 
-/**  Fare custom events, on shutdown save all database to database city leave, city kick, city vist, city acceptvisit, sistemare i message
- * MeteorCity's main
+/**  Fare custom events, on shutdown save all database to database city leave, city kick, city vist, city acceptvisit, sistemare i message, vedere se mettere nei metodo update member
+ * MeteorCity's main               la variabile con la lista di tutte le città, remove in playerinitsevent asincrono, remove hashmap playercity
  * @author Codeh.
  * @version 1.0
  */

@@ -46,7 +46,8 @@ public record CitySetRoleCommand(MeteorCity plugin) implements CommandExecutor {
         }
         PlayerCity playerCity = plugin.getCities().get(playerUUID);
         /* check if player is presidente */
-        if (!(playerCity.getMemberByUUID(playerUUID) == MemberRole.PRESIDENTE)) {
+        MemberRole playerRole = playerCity.getMemberRole(playerUUID);
+        if (!(playerRole == MemberRole.PRESIDENTE)) {
             Message.CITY_PLAYER_NOT_ROLE.send(player);
             return false;
         }

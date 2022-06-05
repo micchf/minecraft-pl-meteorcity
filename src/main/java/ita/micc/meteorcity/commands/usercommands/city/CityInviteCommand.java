@@ -5,6 +5,7 @@ import ita.micc.meteorcity.enums.MemberRole;
 import ita.micc.meteorcity.message.Message;
 import ita.micc.meteorcity.playercity.PlayerCity;
 import ita.micc.meteorcity.playercity.PlayerCityInvite;
+import org.apache.commons.lang3.EnumUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -56,7 +57,8 @@ public record CityInviteCommand(MeteorCity plugin) implements CommandExecutor {
         }
         PlayerCity playerCity = plugin.getCities().get(playerUUID);
         /* check if player is presidente or funzionario */
-        if (!(playerCity.getMemberByUUID(playerUUID) == MemberRole.PRESIDENTE || playerCity.getMemberByUUID(playerUUID) == MemberRole.FUNZIONARIO)) {
+        MemberRole playerRole = EnumUtils.getEnum(MemberRole.class, playerCity.getMemberByUUID(playerUUID).getRole());
+        if (!(playerRole == MemberRole.PRESIDENTE || playerRole == MemberRole.FUNZIONARIO)) {
             Message.CITY_PLAYER_NOT_ROLE.send(player);
             return false;
         }
