@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * CityTemplate class
@@ -24,12 +26,15 @@ public class CityTemplate {
 
     private Pivot playerSpawn;
 
+    private List<Pivot[]> zones;
+
     public CityTemplate(String name, String schematicFileName, String schematicsFolderPath, String permissionRequired) throws FileNotFoundException {
         this.name = name;
         this.permissionRequired = permissionRequired;
         schematicFile = new File(schematicsFolderPath + File.separator + schematicFileName);
         wildZone = new Pivot[2];
         townHall = new Pivot[2];
+        zones = new ArrayList<>();
         if(!schematicFile.exists()) {
             throw new FileNotFoundException();
         }

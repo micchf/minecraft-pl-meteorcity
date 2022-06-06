@@ -65,27 +65,35 @@ blockpaste:
 templates:
   NEW_YORK:
     name: NEW_YORK
-    schematicFileName: NEW_YORK.schem
+    schematicFileName: NEW_YORK1.schem
     permissionRequired: test
     main:
-      X: 169
-      Y: 87
-      Z: 195
+      X: 24
+      Y: 18
+      Z: 28
     playerSpawn:
-      X: 76
-      Y: 13
-      Z: 109
+      X: 11
+      Y: 1
+      Z: 14
     wildZone:
-      minX: 1
-      minY: 2
-      minZ: 10
-      maxX: 5
-      maxY: 10
-      maxZ: 100
+      minX: 21
+      minY: 1
+      minZ: 25
+      maxX: 17
+      maxY: 1
+      maxZ: 3
     townHall:
-      minX: 10
-      minY: 10
-      minZ: 10
-      maxX: 10
-      maxY: 10
-      maxZ: 10
+      minX: 3
+      minY: 1
+      minZ: 14
+      maxX: 5
+      maxY: 1
+      maxZ: 20
+    zones:
+      0:
+        minX: 8
+        minY: 1
+        minZ: 7
+        maxX: 11
+        maxY: 1
+        maxZ: 4

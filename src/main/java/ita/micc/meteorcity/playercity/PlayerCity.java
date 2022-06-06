@@ -34,6 +34,7 @@ public class PlayerCity {
     private final SpawnPoint playerSpawn;
     private final CityTemplate cityTemplate;
     private final HashMap<String, Member> members;
+    private final List<LocationZone> zones;
 
     /**
      * Constructor (When create new City)
@@ -43,6 +44,7 @@ public class PlayerCity {
      */
     public PlayerCity(CityTemplate cityTemplate, SpawnPoint lastPoint, String ownerUUID) {
         members = new HashMap<>();
+        zones = new ArrayList<>();
         City city = new City(0, cityTemplate.getName());
         Member member = new Member(ownerUUID, MemberRole.PRESIDENTE.value());
 
@@ -92,6 +94,20 @@ public class PlayerCity {
                 .type(BuildType.WILD_ZONE.value())
                 .build();
 
+        for (Pivot[] pivot : cityTemplate.getZones()) {
+            LocationZone locationZone = LocationZone.builder()
+                    .minX(lastPoint.getX() - pivot[0].getX())
+                    .minY(lastPoint.getY() + pivot[0].getY())
+                    .minZ(lastPoint.getZ() + pivot[0].getZ())
+                    .maxX(lastPoint.getX() - pivot[1].getX())
+                    .maxY(lastPoint.getY() + pivot[1].getY())
+                    .maxZ(lastPoint.getZ() + pivot[1].getZ())
+                    .world(lastPoint.getWorld())
+                    .type(BuildType.EMPTY.value())
+                    .build();
+            zones.add(locationZone);
+        }
+
         this.city = city;
         this.playerSpawn = playerSpawn;
         this.townHall = townHall;
@@ -139,6 +155,13 @@ public class PlayerCity {
         queryInfo.addParameter("IDCity", IDCity);
         membersGet = databaseInstance.fetchClassData(Member.class, queryInfo);
 
+        queryInfo = new QueryInfo("SELECT * FROM locations WHERE IDCity = :IDCity AND type NOT LIKE :type AND type NOT LIKE :type1 AND type NOT LIKE :type2", null);
+        queryInfo.addParameter("IDCity", IDCity);
+        queryInfo.addParameter("type", BuildType.WILD_ZONE.value());
+        queryInfo.addParameter("type1", BuildType.TOWN_HALL.value());
+        queryInfo.addParameter("type2", BuildType.MAIN.value());
+        zones = databaseInstance.fetchClassData(LocationZone.class, queryInfo);
+
         membersGet.forEach(member -> members.put(member.getUUID(), member));
         cityTemplate = plugin.getCityTemplates().get(city.getCityTemplate());
     }
@@ -178,6 +201,12 @@ public class PlayerCity {
             member.setIDCity(IDCity);
             queries.add(new QueryInfo("INSERT INTO members (UUID,role,IDCity) VALUES (:UUID,:role,:IDCity)", member));
         }
+        for (LocationZone locationZone : zones) {
+            locationZone.setIDCity(IDCity);
+            queries.add(new QueryInfo("INSERT INTO locations (minX,minY,minZ,maxX,maxY,maxZ,world,type,IDCity) VALUES" +
+                    " (:minX,:minY,:minZ,:maxX,:maxY,:maxZ,:world,:type, :IDCity)", locationZone));
+        }
+
         if (!databaseInstance.executeQuery(queries.toArray(new QueryInfo[0])) || IDCity == 0) {
             databaseInstance.executeQuery(new QueryInfo("DELETE FROM cities WHERE ID = :ID", city));
             return false;
@@ -316,12 +345,22 @@ public class PlayerCity {
         city.setPIL(city.getPIL() + PIL);
     }
 
+    /**
+     * Check if location is in a build zone
+     * @param location location
+     * @return location if, or null if not
+     */
     public LocationZone locationInAZone(Location location) {
         if (townHall.contains(location)) {
             return townHall;
         }
         if (wildZone.contains(location)) {
             return wildZone;
+        }
+        for (LocationZone locationZone : zones) {
+            if (locationZone.contains(location)) {
+                return locationZone;
+            }
         }
         return null;
     }

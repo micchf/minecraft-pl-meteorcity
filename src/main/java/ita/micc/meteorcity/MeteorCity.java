@@ -1,6 +1,7 @@
 package ita.micc.meteorcity;
 
 import ita.micc.meteorcity.citytemplate.CityTemplate;
+import ita.micc.meteorcity.citytemplate.Pivot;
 import ita.micc.meteorcity.citytemplate.utils.CityTemplateUtils;
 import ita.micc.meteorcity.commands.admincommands.cityadmin.CityAdminCommand;
 import ita.micc.meteorcity.commands.usercommands.city.CityCommand;
@@ -139,6 +140,14 @@ public final class MeteorCity extends JavaPlugin {
                 cityTemplate.setPlayerSpawn(CityTemplateUtils.calculateSinglePoint(section, "playerSpawn"));
                 cityTemplate.setTownHall(CityTemplateUtils.calculateMultiplePoint(section, "townHall"));
                 cityTemplate.setWildZone(CityTemplateUtils.calculateMultiplePoint(section, "wildZone"));
+
+                ConfigurationSection zonesSection =
+                        Objects.requireNonNull(section.getConfigurationSection("zones"));
+
+                for (String count : zonesSection.getKeys(false)) {
+                    Pivot[] pivotTemp = CityTemplateUtils.calculateMultiplePoint(zonesSection, count);
+                    cityTemplate.getZones().add(pivotTemp);
+                }
 
                 cityTemplates.put(templateName.toUpperCase(), cityTemplate);
                 getLogger().info(templateName + " è stato caricato.");
