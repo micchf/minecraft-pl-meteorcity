@@ -1,5 +1,6 @@
-package ita.micc.meteorcity.playercity;
+package ita.micc.meteorcity.playercity.invite;
 
+import ita.micc.meteorcity.playercity.PlayerCity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

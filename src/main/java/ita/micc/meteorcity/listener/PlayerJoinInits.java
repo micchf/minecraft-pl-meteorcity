@@ -48,13 +48,16 @@ public record PlayerJoinInits(MeteorCity plugin) implements Listener {
             /* check if player has already a city saved into database */
             try {
                 if (!plugin.getDatabaseInstance().existRow("SELECT * FROM members WHERE UUID = '" + playerUUID + "'")) {
-                    player.removeMetadata("city_in_load", plugin);
                     return;
                 }
             } catch (SQLException e) {
-                player.removeMetadata("city_in_load", plugin);
                 e.printStackTrace();
                 return;
+            } finally {
+                player.removeMetadata("city_in_load", plugin);
+                if (player.getLocation().getWorld().getName().equals(plugin.getCityWorldName())) {
+                    Bukkit.getScheduler().runTask(plugin, () -> player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation()));
+                }
             }
 
             /* for get city's id, query IDCity from members table  */

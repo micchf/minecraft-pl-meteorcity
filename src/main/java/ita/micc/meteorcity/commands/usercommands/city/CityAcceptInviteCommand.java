@@ -4,7 +4,7 @@ import ita.micc.meteorcity.MeteorCity;
 import ita.micc.meteorcity.enums.MemberRole;
 import ita.micc.meteorcity.message.Message;
 import ita.micc.meteorcity.playercity.PlayerCity;
-import ita.micc.meteorcity.playercity.PlayerCityInvite;
+import ita.micc.meteorcity.playercity.invite.PlayerCityInvite;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

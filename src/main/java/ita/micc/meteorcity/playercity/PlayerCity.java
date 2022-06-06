@@ -14,7 +14,6 @@ import ita.micc.meteorcity.enums.MemberRole;
 import ita.micc.meteorcity.enums.SpawnPointType;
 import ita.micc.meteorcity.schematic.Schematic;
 import lombok.Getter;
-import lombok.Setter;
 import org.apache.commons.lang3.EnumUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

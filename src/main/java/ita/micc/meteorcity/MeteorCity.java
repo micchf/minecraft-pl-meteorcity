@@ -11,7 +11,7 @@ import ita.micc.meteorcity.database.query.QueryInfo;
 import ita.micc.meteorcity.enums.SpawnPointType;
 import ita.micc.meteorcity.listener.PlayerJoinInits;
 import ita.micc.meteorcity.playercity.PlayerCity;
-import ita.micc.meteorcity.playercity.PlayerCityInvite;
+import ita.micc.meteorcity.playercity.invite.PlayerCityInvite;
 import ita.micc.meteorcity.world.EmptyChunkGenerator;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -37,12 +37,14 @@ public final class MeteorCity extends JavaPlugin {
     private @Getter HashMap<String, PlayerCity> cities;
     private @Getter HashMap<String, PlayerCityInvite> invites;
     private @Getter SpawnPoint lastPoint;
+    private @Getter String cityWorldName;
 
     @Override
     public void onEnable() {
         cityTemplates = new HashMap<>();
         cities = new HashMap<>();
         invites = new HashMap<>();
+        cityWorldName = "Cities";
         try {
             saveDefaultConfig();
             importAllTemplates();
@@ -96,10 +98,10 @@ public final class MeteorCity extends JavaPlugin {
      * Check if cities world exist, if not create.
      */
     public void loadCitiesWorld() {
-        if (!(Bukkit.getWorld("Cities") == null)) {
+        if (!(Bukkit.getWorld(cityWorldName) == null)) {
             return;
         }
-        WorldCreator wc = new WorldCreator("Cities");
+        WorldCreator wc = new WorldCreator(cityWorldName);
         wc.generator(new EmptyChunkGenerator());
         Bukkit.getWorlds().add(wc.createWorld());
     }
