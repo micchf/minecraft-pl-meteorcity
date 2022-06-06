@@ -64,9 +64,7 @@ public record PlayerJoinInits(MeteorCity plugin) implements Listener {
             PlayerCity playerCity = new PlayerCity(IDCity.getIDCity(), plugin);
             player.removeMetadata("city_in_load", plugin);
             /* sync task (bukkit thread) */
-            Bukkit.getScheduler().runTask(plugin, () -> {
-                plugin.getCities().put(playerUUID, playerCity);
-            });
+            Bukkit.getScheduler().runTask(plugin, () -> plugin.getCities().put(playerUUID, playerCity));
         });
     }
 }
