@@ -47,8 +47,14 @@ public record CityInviteCommand(MeteorCity plugin) implements CommandExecutor {
         String targetUUID = target.getUniqueId().toString();
         /* check if target has already an invite */
         if (plugin.getInvites().containsKey(targetUUID)) {
-            Message.TARGET_HAS_ALREADY_AN_INVITE.send(player);
-            return false;
+            PlayerCityInvite invite = plugin.getInvites().get(targetUUID);
+            /* check if invite is expired */
+            if (invite.expired()) {
+                plugin.getInvites().remove(targetUUID);
+            } else {
+                Message.TARGET_HAS_ALREADY_AN_INVITE.send(player);
+                return false;
+            }
         }
         /* check if target has a city */
         if (plugin.getCities().containsKey(targetUUID)) {
