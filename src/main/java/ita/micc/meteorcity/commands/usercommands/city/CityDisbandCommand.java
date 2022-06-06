@@ -4,7 +4,6 @@ import ita.micc.meteorcity.MeteorCity;
 import ita.micc.meteorcity.enums.MemberRole;
 import ita.micc.meteorcity.message.Message;
 import ita.micc.meteorcity.playercity.PlayerCity;
-import org.apache.commons.lang3.EnumUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -37,22 +36,25 @@ public record CityDisbandCommand(MeteorCity plugin) implements CommandExecutor {
         }
 
         /* init city disband */
-        /* check if city is removed from database */
-        if (!playerCity.removeCityFromDatabase(plugin.getDatabaseInstance())) {
-            Message.CITY_ERROR_DURING_DISBAND.send(player);
-            return false;
-        }
-
-        for (Player playerMember : playerCity.getAllMembersOnline()) {
-            plugin.getCities().remove(playerMember.getUniqueId().toString());
-            Message.CITY_PLAYER_CITY_IN_DISBAND.send(playerMember);
-            if (playerCity.getMain().contains(playerMember.getLocation())) {
-                playerMember.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
+        /* async task */
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () ->{
+            /* check if city is removed from database */
+            if (!playerCity.removeCityFromDatabase(plugin.getDatabaseInstance())) {
+                Message.CITY_ERROR_DURING_DISBAND.send(player);
+                return;
             }
-        }
-
-        /* city's disband complete, send message to city's owner */
-        Message.CITY_DISBAND_SUCCESS.send(player);
+            /* city removed, then remove data from cache, and teleport all player in spawn */
+            Bukkit.getScheduler().runTask(plugin, () -> {
+                for (Player playerMember : playerCity.getAllMembersOnline()) {
+                    plugin.getCities().remove(playerMember.getUniqueId().toString());
+                    Message.CITY_PLAYER_CITY_IN_DISBAND.send(playerMember);
+                    if (playerCity.getMain().contains(playerMember.getLocation())) {
+                        playerMember.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
+                    }
+                }
+                Message.CITY_DISBAND_SUCCESS.send(player);
+            });
+        });
         return false;
     }
 }

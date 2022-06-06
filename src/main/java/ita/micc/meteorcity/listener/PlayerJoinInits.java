@@ -4,6 +4,7 @@ import ita.micc.meteorcity.MeteorCity;
 import ita.micc.meteorcity.database.bindclass.IDCity;
 import ita.micc.meteorcity.database.query.QueryInfo;
 import ita.micc.meteorcity.playercity.PlayerCity;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -29,6 +30,10 @@ public record PlayerJoinInits(MeteorCity plugin) implements Listener {
         if (player.hasMetadata("city_in_build")) {
             return;
         }
+        /* check if player has already a city in load */
+        if (player.hasMetadata("city_in_load")) {
+            return;
+        }
         /* check if a member has already city loaded into hashmap */
         for (PlayerCity playerCity : new HashSet<>(plugin.getCities().values())) {
             if (playerCity.getMembers().containsKey(playerUUID)) {
@@ -36,21 +41,32 @@ public record PlayerJoinInits(MeteorCity plugin) implements Listener {
                 return;
             }
         }
-        /* check if player has already a city saved into database */
-        try {
-            if (!plugin.getDatabaseInstance().existRow("SELECT * FROM members WHERE UUID = '" + playerUUID + "'")) {
+
+        player.removeMetadata("city_in_load", plugin);
+        /* async task */
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            /* check if player has already a city saved into database */
+            try {
+                if (!plugin.getDatabaseInstance().existRow("SELECT * FROM members WHERE UUID = '" + playerUUID + "'")) {
+                    player.removeMetadata("city_in_load", plugin);
+                    return;
+                }
+            } catch (SQLException e) {
+                player.removeMetadata("city_in_load", plugin);
+                e.printStackTrace();
                 return;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return;
-        }
 
-        /* for get city's id, query IDCity from members table  */
-        QueryInfo queryInfo = new QueryInfo("SELECT IDCity FROM members WHERE UUID = :UUID", null);
-        queryInfo.addParameter("UUID", playerUUID);
-        IDCity IDCity = plugin.getDatabaseInstance().fetchClassData(IDCity.class, queryInfo).get(0);
-        PlayerCity playerCity = new PlayerCity(IDCity.getIDCity(), plugin);
-        plugin.getCities().put(playerUUID, playerCity);
+            /* for get city's id, query IDCity from members table  */
+            QueryInfo queryInfo = new QueryInfo("SELECT IDCity FROM members WHERE UUID = :UUID", null);
+            queryInfo.addParameter("UUID", playerUUID);
+            IDCity IDCity = plugin.getDatabaseInstance().fetchClassData(IDCity.class, queryInfo).get(0);
+            PlayerCity playerCity = new PlayerCity(IDCity.getIDCity(), plugin);
+            player.removeMetadata("city_in_load", plugin);
+            /* sync task (bukkit thread) */
+            Bukkit.getScheduler().runTask(plugin, () -> {
+                plugin.getCities().put(playerUUID, playerCity);
+            });
+        });
     }
 }

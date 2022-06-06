@@ -68,8 +68,7 @@ public record CityNewCommand(MeteorCity plugin) implements CommandExecutor {
             /* check if the city can be pasted and saved into database */ /* fare in modi che rollback se uno delle due è false */
             if (!playerCity.insertCityIntoDatabase(databaseInstance) || !playerCity.pasteCitySchematic()) {
                 Message.CITY_ERROR_CREATION.send(player);
-                /* Sync task (bukkit thread) */
-                Bukkit.getScheduler().runTask(plugin, () -> player.removeMetadata("city_in_build", plugin)); /* Sync task called after if, "city_in_build" cancelled */
+                player.removeMetadata("city_in_build", plugin);
                 return;
             }
             /* Sync task (bukkit thread) */
