@@ -30,6 +30,7 @@ messages:
   city-player-kick-member: "&c&l(!)&c %player% è stato kickato dalla città."
   city-player-leave-city: "&c&l(!)&c %player% è uscito dalla città."
   city-player-you-are-kicked: "&c&l(!)&c Sei stato kickato dalla città."
+  city-player-zone-is-empty: "&c&l(!)&c Quella zona è vuota, aggiungi una nuova build con /city build"
   invalid-role: "&c&l(!)&c Ruolo non valido."
   city-error-during-disband: "&c&l(!)&c Errore durante il disband."
   city-disband-success: "&a&l(!)&a Disband completato."

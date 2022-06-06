@@ -32,6 +32,7 @@ public enum Message {
     CITY_PLAYER_YOU_ARE_ONLY_PLAYER("city-player-you-are-only-player"),
     CITY_PLAYER_REMOVE_FROM_OWMER_ROLE("city-player-remove-from-owner-role"),
     CITY_PLAYER_NEW_OWNER("city-player-new-owner"),
+    CITY_PLAYER_ZONE_IS_EMPTY("city-player-zone-is-empty"),
     CITY_PLAYER_YOU_LEAVE("city-player-you-leave"),
     CITY_PLAYER_KICK_MEMBER("city-player-kick-member"),
     CITY_PLAYER_LEAVE_CITY("city-player-leave-city"),

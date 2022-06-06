@@ -364,4 +364,18 @@ public class PlayerCity {
         }
         return null;
     }
+
+    /**
+     * Check if city has a build
+     * @param type build
+     * @return true if has, false if not
+     */
+    public boolean hasBuild(BuildType type) {
+        for (LocationZone locationZone : zones) {
+            if (locationZone.toEnumType() == type) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
