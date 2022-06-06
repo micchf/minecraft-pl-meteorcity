@@ -37,7 +37,6 @@ public record CityDisbandCommand(MeteorCity plugin) implements CommandExecutor {
         }
 
         /* init city disband */
-        playerCity.setDisband(true);
         /* check if city is removed from database */
         if (!playerCity.removeCityFromDatabase(plugin.getDatabaseInstance())) {
             Message.CITY_ERROR_DURING_DISBAND.send(player);

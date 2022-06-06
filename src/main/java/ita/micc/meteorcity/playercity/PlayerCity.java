@@ -36,8 +36,6 @@ public class PlayerCity {
     private final CityTemplate cityTemplate;
     private final HashMap<String, Member> members;
 
-    private @Setter boolean disband;
-
     /**
      * Constructor (When create new City)
      * @param cityTemplate From which the playercity will be created.
@@ -46,7 +44,6 @@ public class PlayerCity {
      */
     public PlayerCity(CityTemplate cityTemplate, SpawnPoint lastPoint, String ownerUUID) {
         members = new HashMap<>();
-        disband = false;
         City city = new City(0, cityTemplate.getName());
         Member member = new Member(ownerUUID, MemberRole.PRESIDENTE.value());
 
@@ -114,7 +111,6 @@ public class PlayerCity {
     public PlayerCity(int IDCity, MeteorCity plugin) {
         DatabaseInstance databaseInstance = plugin.getDatabaseInstance();
         members = new HashMap<>();
-        disband = false;
         QueryInfo queryInfo = new QueryInfo("SELECT * FROM cities WHERE ID = :ID", null);
         queryInfo.addParameter("ID", IDCity);
         this.city = databaseInstance.fetchClassData(City.class, queryInfo).get(0);

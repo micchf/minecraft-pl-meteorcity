@@ -39,11 +39,6 @@ public record CityNewCommand(MeteorCity plugin) implements CommandExecutor {
             Message.CITY_PLAYER_HAS_ALREADY_A_CITY_IN_BUILD.send(player);
             return false;
         }
-        /* check if player has already a city in load from database */
-        if (player.hasMetadata("city_in_load")) {
-            Message.CITY_PLAYER_HAS_A_CITY_IN_LOAD_FROM_DATABASE.send(player);
-            return false;
-        }
         /* check if template exist */
         if (!plugin.getCityTemplates().containsKey(args[0].toUpperCase())) {
             Message.TEMPLATE_DONT_EXIST.send(player);
@@ -70,7 +65,7 @@ public record CityNewCommand(MeteorCity plugin) implements CommandExecutor {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             DatabaseInstance databaseInstance = plugin.getDatabaseInstance();
             PlayerCity playerCity = new PlayerCity(cityTemplate, lastPoint, playerUUID);
-            /* check if the city can be pasted and saved into database */
+            /* check if the city can be pasted and saved into database */ /* fare in modi che rollback se uno delle due è false */
             if (!playerCity.insertCityIntoDatabase(databaseInstance) || !playerCity.pasteCitySchematic()) {
                 Message.CITY_ERROR_CREATION.send(player);
                 /* Sync task (bukkit thread) */
