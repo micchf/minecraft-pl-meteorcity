@@ -1,5 +1,6 @@
 package ita.micc.meteorcity.commands;
 
+import ita.micc.meteorcity.MeteorCity;
 import ita.micc.meteorcity.message.Message;
 import lombok.Getter;
 import org.bukkit.command.CommandExecutor;
@@ -23,16 +24,18 @@ public abstract class Command implements CommandExecutor, TabCompleter {
     private final Map<String, CommandExecutor> subCommands;
     private final String permissionRequired;
     private final boolean onlyPlayer;
+    private final MeteorCity plugin;
 
     /**
      *
      * @param permissionRequired permission required for execute all leaves commands.
      * @param onlyPlayer if only player can execute all leaves commands.
      */
-    public Command(String permissionRequired, boolean onlyPlayer) {
+    public Command(String permissionRequired, boolean onlyPlayer, MeteorCity plugin) {
         subCommands = new HashMap<>();
         this.permissionRequired = permissionRequired;
         this.onlyPlayer = onlyPlayer;
+        this.plugin = plugin;
     }
 
     /**

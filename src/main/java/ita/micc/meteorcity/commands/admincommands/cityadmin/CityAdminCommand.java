@@ -19,7 +19,7 @@ public class CityAdminCommand extends Command {
      * @param onlyPlayer         if only player can execute all leaves commands.
      */
     public CityAdminCommand(String permissionRequired, boolean onlyPlayer, MeteorCity plugin) {
-        super(permissionRequired, onlyPlayer);
+        super(permissionRequired, onlyPlayer, plugin);
 
         /* register sub command arg */
         register("refreshtemplates", new CityAdminRefreshTemplates(plugin));
