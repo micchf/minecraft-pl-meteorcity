@@ -8,9 +8,11 @@ import ita.micc.meteorcity.database.DatabaseInstance;
 import ita.micc.meteorcity.database.bindclass.SpawnPoint;
 import ita.micc.meteorcity.database.config.MySQL;
 import ita.micc.meteorcity.database.query.QueryInfo;
+import ita.micc.meteorcity.enums.BuildType;
 import ita.micc.meteorcity.enums.SpawnPointType;
 import ita.micc.meteorcity.listener.PlayerJoinInits;
 import ita.micc.meteorcity.playercity.PlayerCity;
+import ita.micc.meteorcity.playercity.blockpaste.BlockPaste;
 import ita.micc.meteorcity.playercity.invite.PlayerCityInvite;
 import ita.micc.meteorcity.world.EmptyChunkGenerator;
 import lombok.Getter;
@@ -22,6 +24,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -36,6 +39,7 @@ public final class MeteorCity extends JavaPlugin {
     private @Getter HashMap<String, CityTemplate> cityTemplates;
     private @Getter HashMap<String, PlayerCity> cities;
     private @Getter HashMap<String, PlayerCityInvite> invites;
+    private @Getter HashMap<BuildType, BlockPaste> blockPastes;
     private @Getter SpawnPoint lastPoint;
     private @Getter String cityWorldName;
 
@@ -44,10 +48,12 @@ public final class MeteorCity extends JavaPlugin {
         cityTemplates = new HashMap<>();
         cities = new HashMap<>();
         invites = new HashMap<>();
+        blockPastes = new HashMap<>();
         cityWorldName = "Cities";
         try {
             saveDefaultConfig();
             importAllTemplates();
+            loadBlockPaste();
             loadCitiesWorld();
             initDatabase();
             loadLastPoint();
@@ -55,7 +61,7 @@ public final class MeteorCity extends JavaPlugin {
             registerEvents();
             registerCommands();
             getLogger().info("Plugin avviato con successo.");
-        } catch (SQLException | NullPointerException e) {
+        } catch (SQLException | NullPointerException | IllegalArgumentException e) {
             e.printStackTrace();
             getLogger().info("Errore durante il caricamento del plugin, spegnimento in corso..");
             Bukkit.getPluginManager().disablePlugin(this);
@@ -114,6 +120,7 @@ public final class MeteorCity extends JavaPlugin {
          if (configCityTemplates.isEmpty()) {
             return;
         }
+         getLogger().info("Caricamento dei template in corso..");
         for (String templateName : configCityTemplates) {
             try {
                 ConfigurationSection section =
@@ -136,6 +143,29 @@ public final class MeteorCity extends JavaPlugin {
                 getLogger().info("Errore durante il caricamento del template " + templateName);
                 e.printStackTrace();
             }
+        }
+        getLogger().info("Caricamento template completato.");
+    }
+
+    /**
+     * Load blockPaste for city from config
+     * @throws NullPointerException if section is null
+     * @throws IllegalArgumentException is enum is null
+     */
+    public void loadBlockPaste() throws NullPointerException, IllegalArgumentException {
+        getLogger().info("Caricamento BlockPaste in corso..");
+        Set<String> configBlockPastes = Objects.requireNonNull(getConfig().getConfigurationSection("blockpaste")).getKeys(false);
+        for (String blockPasteSection : configBlockPastes) {
+            ConfigurationSection section =
+                    Objects.requireNonNull(getConfig().getConfigurationSection("blockpaste." + blockPasteSection));
+
+            String displayName = Objects.requireNonNull(section.getString("displayName"));
+            List<String> lore = Objects.requireNonNull(section.getStringList("lore"));
+            BuildType buildType = BuildType.valueOf(section.getName());
+
+            BlockPaste blockPaste = new BlockPaste(displayName, lore, buildType);
+            blockPastes.put(buildType, blockPaste);
+            getLogger().info("BlockPaste " + buildType.value() + " è stato caricato.");
         }
     }
 

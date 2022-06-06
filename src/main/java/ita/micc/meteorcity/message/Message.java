@@ -16,9 +16,7 @@ public enum Message {
     BAD_SYNTAX("bad-syntax"),
     ONLY_PLAYER("only-player"),
     NOT_ONLINE("not-online"),
-
     CITY_ADMIN_REFRESHTEMPLATES("city-admin-refreshtemplates"),
-
     CITY_PLAYER_HAS_ALREADY_A_CITY("city-player-has-already-a-city"),
     CITY_PLAYER_HAS_ALREADY_A_CITY_IN_BUILD("city-player-has-already-a-city-in-build"),
     CITY_PLAYER_HASNT_A_CITY("city-player-hasnt-a-city"),
@@ -31,7 +29,6 @@ public enum Message {
     CITY_PLAYER_JOIN_CITY("city-player-join-city"),
     CITY_PLAYER_TARGET_ROLE_UPDATE("city-player-target-role-update"),
     CITY_PLAYER_YOU_ARE_NO_LONGER_OWNER("city-player-you-are-no-longer-owner"),
-
     CITY_PLAYER_YOU_ARE_ONLY_PLAYER("city-player-you-are-only-player"),
     CITY_PLAYER_REMOVE_FROM_OWMER_ROLE("city-player-remove-from-owner-role"),
     CITY_PLAYER_NEW_OWNER("city-player-new-owner"),
@@ -39,13 +36,10 @@ public enum Message {
     CITY_PLAYER_KICK_MEMBER("city-player-kick-member"),
     CITY_PLAYER_LEAVE_CITY("city-player-leave-city"),
     CITY_PLAYER_YOU_ARE_KICKED("city-player-you-are-kicked"),
-
     INVALID_ROLE("invalid-role"),
-
     CITY_ERROR_DURING_DISBAND("city-error-during-disband"),
     CITY_DISBAND_SUCCESS("city-disband-success"),
     CITY_IN_DISBAND("city-in-disband"),
-
     TARGET_IS_NOT_MEMBER_CITY("target-is-not-member-city"),
     TARGET_ROLE_UPDATE("target-role-update"),
     TARGET_NOT_ONLINE("target-not-online"),
@@ -54,15 +48,12 @@ public enum Message {
     TARGET_SEND_INVITE("target-send-invite"),
     TARGET_MESSAGE_TO_TARGET("target-message-to-target"),
     TARGET_HAS_ALREADY_AN_INVITE("target-has-already-an-invite"),
-
     INVITE_YOU_HAVENT("invite-you-havent"),
     INVITE_EXPIRED("invite-expired"),
     INVITE_SUCCESS_JOIN("invite-success-join"),
-
     CITY_START_CREATION("city-start-creation"),
     CITY_SUCCESS_CREATION("city-success-creation"),
     CITY_ERROR_CREATION("city-error-creation"),
-
     TEMPLATE_DONT_EXIST("template-dont-exist"),
     TEMPLATE_NO_PERM("template-no-perm");
 

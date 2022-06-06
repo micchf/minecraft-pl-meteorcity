@@ -307,4 +307,12 @@ public class PlayerCity {
         playerSpawn.setY(location.getBlockY());
         playerSpawn.setZ(location.getBlockZ());
     }
+
+    /**
+     * Update city's pil
+     * @param PIL PIL's added
+     */
+    public void increasePIL(double PIL) {
+        city.setPIL(city.getPIL() + PIL);
+    }
 }

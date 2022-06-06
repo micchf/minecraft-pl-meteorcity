@@ -1,8 +1,8 @@
 database:
-  hostname: localhost
+  hostname: 185.25.204.193
   port: 3306
-  username: newuser
-  password: password
+  username: prova
+  password: prova
   database: meteorcity
 
 messages:
@@ -10,9 +10,7 @@ messages:
   no-perm: "&c&l(!)&c Non hai accesso a questo comando."
   bad-syntax: "&c&l(!)&c Sintassi errata"
   not-online: "&c&l(!)&c Quel player non è online."
-
   city-admin-refreshtemplates: "&a&l(!)&a Templates riavviati."
-
   city-player-has-already-a-city: "&c&l(!)&c Hai già una città."
   city-player-has-already-a-city-in-build: "&c&l(!)&c Stai già creando una città."
   city-player-hasnt-a-city: "&c&l(!)&c Non hai una città."
@@ -25,7 +23,6 @@ messages:
   city-player-join-city: "&a&l(!)&a Sei entrato in città."
   city-player-target-role-update:  "&a&l(!)&a Ruolo aggiornato con successo."
   city-player-you-are-no-longer-owner: "&c&l(!)&c Non sei più il presidente della città, avendo passato il tuo ruolo ad un altro membro."
-
   city-player-you-are-only-player: "&c&l(!)&c Sei l'unico membro della città, non conviene fare /city disband ?"
   city-player-remove-from-owner-role: "&c&l(!)&c Sei stato rimosso dal ruolo di presidente."
   city-player-new-owner: "&c&l(!)&c %player% è il nuovo presidente della città."
@@ -33,13 +30,10 @@ messages:
   city-player-kick-member: "&c&l(!)&c %player% è stato kickato dalla città."
   city-player-leave-city: "&c&l(!)&c %player% è uscito dalla città."
   city-player-you-are-kicked: "&c&l(!)&c Sei stato kickato dalla città."
-
   invalid-role: "&c&l(!)&c Ruolo non valido."
-
   city-error-during-disband: "&c&l(!)&c Errore durante il disband."
   city-disband-success: "&a&l(!)&a Disband completato."
   city-in-disband: "&c&l(!)&c La città è attualmente in disband."
-
   target-is-not-member-city: "&c&l(!)&c Quel player non è un membro della tua isola."
   target-not-online: "&c&l(!)&c Quel player non è online."
   target-you-are: "&c&l(!)&c Non puoi fare questo comando a te stesso."
@@ -48,17 +42,24 @@ messages:
   target-message-to-target: "&a&l(!)&a Hai ricevuto un nuovo invito da %player%, fai /city acceptinvite per accettarlo."
   target-has-already-an-invite: "&c&l(!)&c Quel player ha già un invito."
   target-role-update: "&a&l(!)&a Il tuo ruolo all'interno della città è stato aggiornato."
-
   invite-you-havent: "&c&l(!)&c Non hai inviti in sospeso."
   invite-expired: "&c&l(!)&c Invito scaduto."
   invite-success-join: "&a&l(!)&a %player% è entrato in città."
-
   city-start-creation: "&a&l(!)&a Creazione città in corso."
   city-success-creation: "&a&l(!)&a Città creata con successo, fai /city go per andare nella tua città."
   city-error-creation: "&c&l(!)&C Errore durante la creazione della città."
-
   template-dont-exist: "&c&l(!)&c Quel template non esiste."
   template-no-perm: "&c&l(!)&c Non hai accesso a questo template."
+
+blockpaste:
+  TOWN_HALL:
+    displayName: "&c&nMunicipio"
+    lore:
+      - "&8&m--------------"
+      - "&cQuesto blocco di permette"
+      - "&cDi piazzare, il tuo municipio."
+      - "&cPuoi soltanto piazzarlo nella zona apposita."
+      - "&8&m---------------"
 
 templates:
   NEW_YORK:
