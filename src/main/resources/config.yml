@@ -52,12 +52,13 @@ messages:
   template-no-perm: "&c&l(!)&c Non hai accesso a questo template."
 
 blockpaste:
-  TOWN_HALL:
-    displayName: "&c&nMunicipio"
+  CATASTO:
+    displayName: "&c&nCatasto"
+    material: GRASS
     lore:
       - "&8&m--------------"
       - "&cQuesto blocco di permette"
-      - "&cDi piazzare, il tuo municipio."
+      - "&cDi piazzare, il tuo catasto."
       - "&cPuoi soltanto piazzarlo nella zona apposita."
       - "&8&m---------------"
 

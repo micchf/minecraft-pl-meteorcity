@@ -17,6 +17,7 @@ import ita.micc.meteorcity.playercity.invite.PlayerCityInvite;
 import ita.micc.meteorcity.world.EmptyChunkGenerator;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.WorldCreator;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -162,8 +163,9 @@ public final class MeteorCity extends JavaPlugin {
             String displayName = Objects.requireNonNull(section.getString("displayName"));
             List<String> lore = Objects.requireNonNull(section.getStringList("lore"));
             BuildType buildType = BuildType.valueOf(section.getName());
+            Material material = Material.valueOf(section.getString("material"));
 
-            BlockPaste blockPaste = new BlockPaste(displayName, lore, buildType);
+            BlockPaste blockPaste = new BlockPaste(displayName, lore, buildType, material);
             blockPastes.put(buildType, blockPaste);
             getLogger().info("BlockPaste " + buildType.value() + " è stato caricato.");
         }
