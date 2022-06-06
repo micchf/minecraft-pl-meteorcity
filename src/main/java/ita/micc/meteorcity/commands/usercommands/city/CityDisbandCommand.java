@@ -50,9 +50,9 @@ public record CityDisbandCommand(MeteorCity plugin) implements CommandExecutor {
                     Message.CITY_PLAYER_CITY_IN_DISBAND.send(playerMember);
                     if (playerCity.getMain().contains(playerMember.getLocation())) {
                         playerMember.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
+                        Message.CITY_DISBAND_SUCCESS.send(playerMember);
                     }
                 }
-                Message.CITY_DISBAND_SUCCESS.send(player);
             });
         });
         return false;

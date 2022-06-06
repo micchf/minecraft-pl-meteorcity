@@ -10,6 +10,7 @@ import ita.micc.meteorcity.database.config.MySQL;
 import ita.micc.meteorcity.database.query.QueryInfo;
 import ita.micc.meteorcity.enums.BuildType;
 import ita.micc.meteorcity.enums.SpawnPointType;
+import ita.micc.meteorcity.listener.EventsOnClickBuild;
 import ita.micc.meteorcity.listener.PlayerJoinInits;
 import ita.micc.meteorcity.playercity.PlayerCity;
 import ita.micc.meteorcity.playercity.blockpaste.BlockPaste;
@@ -90,6 +91,7 @@ public final class MeteorCity extends JavaPlugin {
      */
     public void registerEvents() {
         Bukkit.getPluginManager().registerEvents(new PlayerJoinInits(this), this);
+        Bukkit.getPluginManager().registerEvents(new EventsOnClickBuild(this), this);
     }
 
     /**

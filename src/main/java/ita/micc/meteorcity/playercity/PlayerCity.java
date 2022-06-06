@@ -315,4 +315,14 @@ public class PlayerCity {
     public void increasePIL(double PIL) {
         city.setPIL(city.getPIL() + PIL);
     }
+
+    public LocationZone locationInAZone(Location location) {
+        if (townHall.contains(location)) {
+            return townHall;
+        }
+        if (wildZone.contains(location)) {
+            return wildZone;
+        }
+        return null;
+    }
 }
