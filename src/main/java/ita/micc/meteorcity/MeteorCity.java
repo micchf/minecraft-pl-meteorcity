@@ -124,7 +124,7 @@ public final class MeteorCity extends JavaPlugin {
     }
 
     /**
-     * Register placeholders for PlaceholderAPI
+     * Register placeholders for PlaceholderAPI // Modificare TimeOut MySQL
      */
     private void loadPlaceHolders() {
         new Test(this).register();

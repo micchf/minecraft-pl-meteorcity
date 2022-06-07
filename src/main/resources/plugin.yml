@@ -1,7 +1,7 @@
 name: MeteorCity
 version: '${project.version}'
 main: ita.micc.meteorcity.MeteorCity
-api-version: 1.17
+api-version: 1.18
 depend:
   - WorldEdit
   - DeluxeMenus
