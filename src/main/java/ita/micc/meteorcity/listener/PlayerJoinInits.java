@@ -2,6 +2,7 @@ package ita.micc.meteorcity.listener;
 
 import ita.micc.meteorcity.MeteorCity;
 import ita.micc.meteorcity.database.bindclass.IDCity;
+import ita.micc.meteorcity.database.bindclass.Member;
 import ita.micc.meteorcity.database.query.QueryInfo;
 import ita.micc.meteorcity.playercity.PlayerCity;
 import org.bukkit.Bukkit;
@@ -63,7 +64,11 @@ public record PlayerJoinInits(MeteorCity plugin) implements Listener {
             PlayerCity playerCity = new PlayerCity(IDCity.getIDCity(), plugin);
             player.removeMetadata("city_in_load", plugin);
             /* sync task (bukkit thread) */
-            Bukkit.getScheduler().runTask(plugin, () -> plugin.getCities().put(playerUUID, playerCity));
+            Bukkit.getScheduler().runTask(plugin, () -> {
+                for (Member member : playerCity.getMembers().values()) {
+                    plugin.getCities().put(member.getUUID(), playerCity);
+                }
+            });
         });
     }
 }
