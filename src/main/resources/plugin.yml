@@ -5,6 +5,7 @@ api-version: 1.17
 depend:
   - WorldEdit
   - DeluxeMenus
+  - PlaceholderAPI
 authors: [ Codeh ]
 description: Plugin for create City
 commands:

@@ -15,11 +15,13 @@ import ita.micc.meteorcity.enums.BuildType;
 import ita.micc.meteorcity.enums.SpawnPointType;
 import ita.micc.meteorcity.listener.EventsOnClickBuild;
 import ita.micc.meteorcity.listener.PlayerJoinInits;
+import ita.micc.meteorcity.placeholder.Test;
 import ita.micc.meteorcity.playercity.PlayerCity;
 import ita.micc.meteorcity.buildsettings.blockpaste.BlockPaste;
 import ita.micc.meteorcity.playercity.invite.PlayerCityInvite;
 import ita.micc.meteorcity.world.EmptyChunkGenerator;
 import lombok.Getter;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.WorldCreator;
@@ -61,12 +63,13 @@ public final class MeteorCity extends JavaPlugin {
             importAllTemplates();
             loadBuildSettings();
             loadCitiesWorld();
-            startBenchMark();
+            startBenchmark();
             initDatabase();
             loadLastPoint();
             showLastPointInLog();
             registerEvents();
             registerCommands();
+            loadPlaceHolders();
             getLogger().info("Plugin avviato con successo.");
         } catch (SQLException | NullPointerException | IllegalArgumentException e) {
             e.printStackTrace();
@@ -118,6 +121,13 @@ public final class MeteorCity extends JavaPlugin {
         WorldCreator wc = new WorldCreator(cityWorldName);
         wc.generator(new EmptyChunkGenerator());
         Bukkit.getWorlds().add(wc.createWorld());
+    }
+
+    /**
+     * Register placeholders for PlaceholderAPI
+     */
+    private void loadPlaceHolders() {
+        new Test(this).register();
     }
 
     /**
@@ -196,7 +206,7 @@ public final class MeteorCity extends JavaPlugin {
     /**
      * Start benchmark
      */
-    private void startBenchMark() {
+    private void startBenchmark() {
         getLogger().info("====================================");
         getLogger().info("Avvio Benchmark..");
         getLogger().info("Tempo di esecuzione: " + new Benchmark().start(100_000));
