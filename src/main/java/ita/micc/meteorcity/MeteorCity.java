@@ -1,6 +1,7 @@
 package ita.micc.meteorcity;
 
 import ita.micc.meteorcity.benchmark.Benchmark;
+import ita.micc.meteorcity.buildsettings.BuildSettings;
 import ita.micc.meteorcity.citytemplate.CityTemplate;
 import ita.micc.meteorcity.citytemplate.Pivot;
 import ita.micc.meteorcity.citytemplate.utils.CityTemplateUtils;
@@ -15,7 +16,7 @@ import ita.micc.meteorcity.enums.SpawnPointType;
 import ita.micc.meteorcity.listener.EventsOnClickBuild;
 import ita.micc.meteorcity.listener.PlayerJoinInits;
 import ita.micc.meteorcity.playercity.PlayerCity;
-import ita.micc.meteorcity.playercity.blockpaste.BlockPaste;
+import ita.micc.meteorcity.buildsettings.blockpaste.BlockPaste;
 import ita.micc.meteorcity.playercity.invite.PlayerCityInvite;
 import ita.micc.meteorcity.world.EmptyChunkGenerator;
 import lombok.Getter;
@@ -37,27 +38,28 @@ import java.util.Set;
  * @author Codeh.
  * @version 1.0
  */
+@Getter
 public final class MeteorCity extends JavaPlugin {
 
-    private @Getter DatabaseInstance databaseInstance;
-    private @Getter HashMap<String, CityTemplate> cityTemplates;
-    private @Getter HashMap<String, PlayerCity> cities;
-    private @Getter HashMap<String, PlayerCityInvite> invites;
-    private @Getter HashMap<BuildType, BlockPaste> blockPastes;
-    private @Getter SpawnPoint lastPoint;
-    private @Getter String cityWorldName;
+    private DatabaseInstance databaseInstance;
+    private HashMap<String, CityTemplate> cityTemplates;
+    private HashMap<String, PlayerCity> cities;
+    private HashMap<String, PlayerCityInvite> invites;
+    private HashMap<BuildType, BuildSettings> buildSettings;
+    private SpawnPoint lastPoint;
+    private String cityWorldName;
 
     @Override
     public void onEnable() {
         cityTemplates = new HashMap<>();
         cities = new HashMap<>();
         invites = new HashMap<>();
-        blockPastes = new HashMap<>();
+        buildSettings = new HashMap<>();
         cityWorldName = "Cities";
         try {
             saveDefaultConfig();
             importAllTemplates();
-            loadBlockPaste();
+            loadBuildSettings();
             loadCitiesWorld();
             startBenchMark();
             initDatabase();
@@ -82,7 +84,7 @@ public final class MeteorCity extends JavaPlugin {
     /**
      * register commands
      */
-    public void registerCommands() throws NullPointerException {
+    private void registerCommands() throws NullPointerException {
         CityCommand cityCommand = new CityCommand(null, true, this);
         CityAdminCommand cityAdminCommand = new CityAdminCommand("cityadmin.admin", false, this);
         Objects.requireNonNull(getCommand("city")).setExecutor(cityCommand);
@@ -92,7 +94,7 @@ public final class MeteorCity extends JavaPlugin {
     /**
      * register events
      */
-    public void registerEvents() {
+    private void registerEvents() {
         Bukkit.getPluginManager().registerEvents(new PlayerJoinInits(this), this);
         Bukkit.getPluginManager().registerEvents(new EventsOnClickBuild(this), this);
     }
@@ -109,7 +111,7 @@ public final class MeteorCity extends JavaPlugin {
     /**
      * Check if cities world exist, if not create.
      */
-    public void loadCitiesWorld() {
+    private void loadCitiesWorld() {
         if (!(Bukkit.getWorld(cityWorldName) == null)) {
             return;
         }
@@ -121,7 +123,7 @@ public final class MeteorCity extends JavaPlugin {
     /**
      * import all templates from config.
      */
-    public void importAllTemplates() throws NullPointerException {
+    private void importAllTemplates() throws NullPointerException {
         Set<String> configCityTemplates = Objects.requireNonNull(getConfig().getConfigurationSection("templates")).getKeys(false);
          if (configCityTemplates.isEmpty()) {
             return;
@@ -164,26 +166,29 @@ public final class MeteorCity extends JavaPlugin {
     }
 
     /**
-     * Load blockPaste for city from config
+     * Load buildsettings for city from config
      * @throws NullPointerException if section is null
      * @throws IllegalArgumentException is enum is null
      */
-    public void loadBlockPaste() throws NullPointerException, IllegalArgumentException {
+    private void loadBuildSettings() throws NullPointerException, IllegalArgumentException {
         getLogger().info("====================================");
-        getLogger().info("Caricamento BlockPaste in corso..");
-        Set<String> configBlockPastes = Objects.requireNonNull(getConfig().getConfigurationSection("blockpaste")).getKeys(false);
+        getLogger().info("Caricamento BuildSettings in corso..");
+        Set<String> configBlockPastes = Objects.requireNonNull(getConfig().getConfigurationSection("settings")).getKeys(false);
         for (String blockPasteSection : configBlockPastes) {
             ConfigurationSection section =
-                    Objects.requireNonNull(getConfig().getConfigurationSection("blockpaste." + blockPasteSection));
+                    Objects.requireNonNull(getConfig().getConfigurationSection("settings." + blockPasteSection));
 
-            String displayName = Objects.requireNonNull(section.getString("displayName"));
-            List<String> lore = Objects.requireNonNull(section.getStringList("lore"));
+            String displayName = Objects.requireNonNull(section.getString("blockPaste.displayName"));
+            List<String> lore = Objects.requireNonNull(section.getStringList("blockPaste.lore"));
             BuildType buildType = BuildType.valueOf(section.getName());
-            Material material = Material.valueOf(section.getString("material"));
+            Material material = Material.valueOf(section.getString("blockPaste.material"));
 
+            String guiName = Objects.requireNonNull(getConfig().getString("settings." + blockPasteSection + ".guiName"));
             BlockPaste blockPaste = new BlockPaste(displayName, lore, buildType, material);
-            blockPastes.put(buildType, blockPaste);
-            getLogger().info("BlockPaste " + buildType.value() + " è stato caricato.");
+
+            BuildSettings buildSetting = new BuildSettings(blockPaste, guiName);
+            buildSettings.put(buildType, buildSetting);
+            getLogger().info("Settings " + buildType.value() + " è stato caricato.");
         }
         getLogger().info("====================================");
     }
@@ -191,10 +196,10 @@ public final class MeteorCity extends JavaPlugin {
     /**
      * Start benchmark
      */
-    public void startBenchMark() {
+    private void startBenchMark() {
         getLogger().info("====================================");
         getLogger().info("Avvio Benchmark..");
-        getLogger().info("Tempo di esecuzione: " + new Benchmark().start(100_000_000));
+        getLogger().info("Tempo di esecuzione: " + new Benchmark().start(100_000));
         getLogger().info("====================================");
     }
 
@@ -202,7 +207,7 @@ public final class MeteorCity extends JavaPlugin {
      * Init database connection.
      * @throws SQLException if cannot establish connection with database.
      */
-    public void initDatabase() throws SQLException {
+    private void initDatabase() throws SQLException {
         ConfigurationSection config = getConfig();
         MySQL mySQL = new MySQL(config.getString("database.hostname"),
                 config.getInt("database.port"), config.getString("database.username"),
@@ -215,7 +220,7 @@ public final class MeteorCity extends JavaPlugin {
      * @throws NullPointerException if lastpoint is null
      * @throws SQLException if cannot establish connection with database.
      */
-    public void loadLastPoint() throws SQLException, NullPointerException {
+    private void loadLastPoint() throws SQLException, NullPointerException {
         QueryInfo queryInfo = new QueryInfo("SELECT * FROM spawns WHERE type = :type", null);
         queryInfo.addParameter("type", SpawnPointType.LAST_POINT.value());
 

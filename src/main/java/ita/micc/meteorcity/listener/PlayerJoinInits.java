@@ -54,9 +54,6 @@ public record PlayerJoinInits(MeteorCity plugin) implements Listener {
                 return;
             } finally {
                 player.removeMetadata("city_in_load", plugin);
-                if (player.getLocation().getWorld().getName().equals(plugin.getCityWorldName())) {
-                    Bukkit.getScheduler().runTask(plugin, () -> player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation()));
-                }
             }
 
             /* for get city's id, query IDCity from members table  */

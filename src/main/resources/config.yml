@@ -1,9 +1,13 @@
+#==============================================================================================================
+
 database:
   hostname: 185.25.204.193
   port: 3306
   username: prova
   password: prova
   database: meteorcity
+
+#==============================================================================================================
 
 messages:
   only-player: "&c&l(!)&c Solo i player possono."
@@ -52,16 +56,33 @@ messages:
   template-dont-exist: "&c&l(!)&c Quel template non esiste."
   template-no-perm: "&c&l(!)&c Non hai accesso a questo template."
 
-blockpaste:
+#==============================================================================================================
+
+settings:
   CATASTO:
-    displayName: "&c&nCatasto"
-    material: GRASS
-    lore:
-      - "&8&m--------------"
-      - "&cQuesto blocco di permette"
-      - "&cDi piazzare, il tuo catasto."
-      - "&cPuoi soltanto piazzarlo nella zona apposita."
-      - "&8&m---------------"
+    blockPaste:
+      displayName: "&c&nCatasto"
+      material: GRASS
+      lore:
+        - "&8&m--------------"
+        - "&cQuesto blocco di permette"
+        - "&cDi piazzare, il tuo catasto."
+        - "&cPuoi soltanto piazzarlo nella zona apposita."
+        - "&8&m---------------"
+    guiName: catasto
+  TOWN_HALL:
+      blockPaste:
+        displayName: "&c&nMunicipio"
+        material: GRASS
+        lore:
+          - "&8&m--------------"
+          - "&cQuesto blocco di permette"
+          - "&cDi piazzare, il tuo municipio"
+          - "&cPuoi soltanto piazzarlo nella zona apposita."
+          - "&8&m---------------"
+      guiName: townHall
+
+#==============================================================================================================
 
 templates:
   NEW_YORK:
@@ -98,3 +119,5 @@ templates:
         maxX: 11
         maxY: 1
         maxZ: 4
+
+#=============================================================================================================

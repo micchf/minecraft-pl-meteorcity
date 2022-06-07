@@ -1,4 +1,4 @@
-package ita.micc.meteorcity.playercity.blockpaste;
+package ita.micc.meteorcity.buildsettings.blockpaste;
 
 import ita.micc.meteorcity.enums.BuildType;
 import lombok.Getter;
@@ -14,12 +14,13 @@ import java.util.List;
  * BlockPaste
  * @author Codeh.
  */
+@Getter
 public class BlockPaste {
 
-    private final @Getter String displayName;
-    private final @Getter List<String> lore;
-    private final @Getter BuildType type;
-    private final @Getter ItemStack itemStack;
+    private final String displayName;
+    private final List<String> lore;
+    private final BuildType type;
+    private final ItemStack itemStack;
 
     /**
      * Constructor

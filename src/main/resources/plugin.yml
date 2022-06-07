@@ -2,7 +2,9 @@ name: MeteorCity
 version: '${project.version}'
 main: ita.micc.meteorcity.MeteorCity
 api-version: 1.17
-depend: [ WorldEdit ]
+depend:
+  - WorldEdit
+  - DeluxeMenus
 authors: [ Codeh ]
 description: Plugin for create City
 commands:

@@ -1,6 +1,7 @@
 package ita.micc.meteorcity.listener;
 
 import ita.micc.meteorcity.MeteorCity;
+import ita.micc.meteorcity.buildsettings.BuildSettings;
 import ita.micc.meteorcity.database.bindclass.LocationZone;
 import ita.micc.meteorcity.enums.BuildType;
 import ita.micc.meteorcity.message.Message;
@@ -8,6 +9,7 @@ import ita.micc.meteorcity.playercity.PlayerCity;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -51,36 +53,19 @@ public record EventsOnClickBuild(MeteorCity plugin) implements Listener {
             if (locationZone == null) {
                 return;
             }
-
-            /* init location open gui */
-            /* check if location is TOWN_HALL */
-            if (locationZone.toEnumType() == BuildType.TOWN_HALL) {
-                player.sendMessage("Aprendo GUI TownHall");
-                return;
-            }
-
             /* check if location is EMPTY */
             if (locationZone.toEnumType() == BuildType.EMPTY) {
                 Message.CITY_PLAYER_ZONE_IS_EMPTY.send(player);
                 return;
             }
-
-            /* check if location is CATASTO */
-            if (locationZone.toEnumType() == BuildType.CATASTO) {
-                player.sendMessage("Aprendo GUI Catasto");
+            /* check if location is WILD_ZONE */
+            if (locationZone.toEnumType() == BuildType.WILD_ZONE) {
                 return;
             }
 
-            /* check if location is PENTAGONO */
-            if (locationZone.toEnumType() == BuildType.PENTAGONO) {
-                player.sendMessage("Aprendo GUI Pentagono");
-                return;
-            }
-
-            /* check if location is BROKER */
-            if (locationZone.toEnumType() == BuildType.BROKER) {
-                player.sendMessage("Aprendo GUI Broker");
-            }
+            /* init location open gui */
+            BuildSettings buildSettings = plugin.getBuildSettings().get(locationZone.toEnumType());
+            Bukkit.getScheduler().runTask(plugin, () -> buildSettings.openInfoGUI(player));
         });
     }
 }
