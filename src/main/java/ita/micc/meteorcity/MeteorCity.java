@@ -1,5 +1,6 @@
 package ita.micc.meteorcity;
 
+import ita.micc.meteorcity.benchmark.Benchmark;
 import ita.micc.meteorcity.citytemplate.CityTemplate;
 import ita.micc.meteorcity.citytemplate.Pivot;
 import ita.micc.meteorcity.citytemplate.utils.CityTemplateUtils;
@@ -58,6 +59,7 @@ public final class MeteorCity extends JavaPlugin {
             importAllTemplates();
             loadBlockPaste();
             loadCitiesWorld();
+            startBenchMark();
             initDatabase();
             loadLastPoint();
             showLastPointInLog();
@@ -124,6 +126,7 @@ public final class MeteorCity extends JavaPlugin {
          if (configCityTemplates.isEmpty()) {
             return;
         }
+         getLogger().info("====================================");
          getLogger().info("Caricamento dei template in corso..");
         for (String templateName : configCityTemplates) {
             try {
@@ -157,6 +160,7 @@ public final class MeteorCity extends JavaPlugin {
             }
         }
         getLogger().info("Caricamento template completato.");
+        getLogger().info("====================================");
     }
 
     /**
@@ -165,6 +169,7 @@ public final class MeteorCity extends JavaPlugin {
      * @throws IllegalArgumentException is enum is null
      */
     public void loadBlockPaste() throws NullPointerException, IllegalArgumentException {
+        getLogger().info("====================================");
         getLogger().info("Caricamento BlockPaste in corso..");
         Set<String> configBlockPastes = Objects.requireNonNull(getConfig().getConfigurationSection("blockpaste")).getKeys(false);
         for (String blockPasteSection : configBlockPastes) {
@@ -180,6 +185,17 @@ public final class MeteorCity extends JavaPlugin {
             blockPastes.put(buildType, blockPaste);
             getLogger().info("BlockPaste " + buildType.value() + " è stato caricato.");
         }
+        getLogger().info("====================================");
+    }
+
+    /**
+     * Start benchmark
+     */
+    public void startBenchMark() {
+        getLogger().info("====================================");
+        getLogger().info("Avvio Benchmark..");
+        getLogger().info("Tempo di esecuzione: " + new Benchmark().start(100_000_000));
+        getLogger().info("====================================");
     }
 
     /**
