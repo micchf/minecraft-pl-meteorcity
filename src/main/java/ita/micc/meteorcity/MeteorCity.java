@@ -15,11 +15,11 @@ import ita.micc.meteorcity.enums.BuildType;
 import ita.micc.meteorcity.enums.SpawnPointType;
 import ita.micc.meteorcity.listener.EventsOnClickBuild;
 import ita.micc.meteorcity.listener.PlayerJoinInits;
-import ita.micc.meteorcity.placeholder.Test;
+import ita.micc.meteorcity.placeholder.MeteorCityExtension;
 import ita.micc.meteorcity.playercity.PlayerCity;
 import ita.micc.meteorcity.buildsettings.blockpaste.BlockPaste;
 import ita.micc.meteorcity.playercity.invite.PlayerCityInvite;
-import ita.micc.meteorcity.world.EmptyChunkGenerator;
+import ita.micc.meteorcity.world.VoidGenerator;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -35,8 +35,8 @@ import java.util.Objects;
 import java.util.Set;
 
 /**  Fare custom events, on shutdown save all database to database city leave fare settings city setvisit, city kick, city vist, city acceptvisit, sistemare i message, vedere se mettere nei metodo update member
- * MeteorCity's main               la variabile con la lista di tutte le città, remove in playerinitsevent asincrono se tolgo async in playerinitsevent posso togliere city in load
- * @author Codeh.
+ * MeteorCity's main               la variabile con la lista di tutte le città modificare timeout mysql, quando il creepe esplode se esplode in una costruzione annullare
+ * @author Codeh.   sistemare le variabile put cities, usare async invece di event
  * @version 1.0
  */
 @Getter
@@ -113,20 +113,18 @@ public final class MeteorCity extends JavaPlugin {
     /**
      * Check if cities world exist, if not create.
      */
-    private void loadCitiesWorld() {
-        if (!(Bukkit.getWorld(cityWorldName) == null)) {
-            return;
-        }
+    private void loadCitiesWorld() throws NullPointerException {
         WorldCreator wc = new WorldCreator(cityWorldName);
-        wc.generator(new EmptyChunkGenerator());
+        wc.generator(new VoidGenerator());
         Bukkit.getWorlds().add(wc.createWorld());
+        getLogger().info("Mondo " + cityWorldName + " caricato.");
     }
 
     /**
      * Register placeholders for PlaceholderAPI // Modificare TimeOut MySQL
      */
     private void loadPlaceHolders() {
-        new Test(this).register();
+        new MeteorCityExtension(this).register();
     }
 
     /**

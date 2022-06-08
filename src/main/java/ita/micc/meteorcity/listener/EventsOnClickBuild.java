@@ -9,9 +9,13 @@ import ita.micc.meteorcity.playercity.PlayerCity;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Creeper;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.Objects;
@@ -66,5 +70,33 @@ public record EventsOnClickBuild(MeteorCity plugin) implements Listener {
             BuildSettings buildSettings = plugin.getBuildSettings().get(locationZone.toEnumType());
             Bukkit.getScheduler().runTask(plugin, () -> buildSettings.openInfoGUI(player));
         });
+    }
+
+    @EventHandler
+    public void test(EntityExplodeEvent event) {
+        Entity entity = event.getEntity();
+        if (!(entity instanceof Creeper)) {
+            return;
+        }
+        if (!entity.getLocation().getWorld().getName().equals(plugin.getCityWorldName())) {
+            return;
+        }
+        for (PlayerCity playerCity : plugin.getCities().values()) {
+            if (!(playerCity.getWildZone().contains(entity.getLocation()))) {
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
+    public void test1(BlockExplodeEvent event) {
+        Block block = event.getBlock();
+        if (!(block.getType() == Material.DIRT)) {
+            return;
+        }
+        if (!block.getLocation().getWorld().getName().equals(plugin.getCityWorldName())) {
+            return;
+        }
+        event.setCancelled(true);
     }
 }

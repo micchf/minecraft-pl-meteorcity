@@ -12,13 +12,7 @@ public enum BuildType {
 
     BROKER("BROKER"),
     PENTAGONO("PENTAGONO"),
-    CATASTO("CATASTO"),
-
-    TERRICCIO("TERRICCIO"),
-    HOUSE("HOUSE"),
-    VILLA("VILLA"),
-    CONDOMINIO("CONDOMINIO"),
-    HOTEL("HOTEL");
+    CATASTO("CATASTO");
 
     private final String type;
 

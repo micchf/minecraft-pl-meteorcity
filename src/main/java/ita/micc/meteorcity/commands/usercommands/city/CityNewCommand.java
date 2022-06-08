@@ -40,7 +40,7 @@ public record CityNewCommand(MeteorCity plugin) implements CommandExecutor {
             return false;
         }
         /* check if player has already a city in load */
-        if (player.hasMetadata("city_in_build")) {
+        if (player.hasMetadata("city_in_load")) {
             Message.CITY_PLAYER_HAS_A_CITY_IN_LOAD_FROM_DATABASE.send(player);
             return false;
         }
